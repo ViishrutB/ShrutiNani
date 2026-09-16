@@ -38,7 +38,10 @@ This last row drives the architecture decision below: **content and layout must 
 ```
 /                    Home — name, one-line identity, headshot, 3–4 highlight stats, nav, a rotating pull-quote/testimonial if any exist
 /bio                 Bio — the Statement of Purpose, plus room for pull-quotes and testimonials as they arrive
-/resume              Resume/CV — embedded PDF + an HTML-rendered mirror (for SEO/copy-paste + ATS-style readability)
+/resume              Timeline — the CV as a chronological HTML timeline (for SEO/copy-paste + ATS-style
+                     readability), with a "Download as PDF" button rather than an inline PDF embed
+                     (Vishrut's call: the timeline is the primary read, the PDF is a takeaway, not a
+                     second copy of the page to scroll through)
 /experiences         The 10 ERAS experiences, expanded past the 750-char limit, grouped by theme
 /publications        Peer-reviewed papers + thesis — citation + abstract for each, thesis PDF hosted directly, papers link out to the journal (see §7)
 /presentations       Conference talks & posters, chronological, with poster PDFs/images where available
@@ -164,7 +167,7 @@ No open questions remain before build starts — see §9 for the remaining conte
 |---|---|---|---|
 | M0 | Content finalized (assets in §9 collected) | Source-of-truth content files ready to drop in | ☐ — checklist tracked in `README.md` |
 | M1 | Repo scaffolded, deployed empty shell | Live placeholder on Vercel at `shrutinani.com`, nav shell, design tokens (type, color, spacing) | ✅ Astro 7 + Tailwind 4 + content collections, 6 routes, `npm run test` clean, deployed via Vercel's GitHub integration (auto-deploys `main` on push), DNS pointed from Squarespace, `shrutinani.com` live over HTTPS |
-| M2 | Home + Resume pages | Landing page with identity/highlights; Resume page with embedded CV PDF + HTML mirror | 🟡 Resume done — embedded CV PDF, HTML timeline mirror sourced from the real CV; Home still a placeholder |
+| M2 | Home + Timeline pages | Landing page with identity/highlights; Timeline page (`/resume`) as an HTML chronological mirror of the CV with a PDF download | 🟡 Timeline done — sourced from the real CV, "Download as PDF" button; Home still a placeholder |
 | M3 | Bio page | Statement of Purpose rendered as the page body, testimonials collection wired up (renders empty gracefully) | ✅ SOP rendered as the page body; testimonials wired up and rendering gracefully at zero entries |
 | M4 | Experiences page | All 10 entries rendered from content collection, grouped/filterable by theme (research/clinical/leadership) | ☐ |
 | M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | 🟡 All 4 papers' citations + confirmed DOIs entered and surfaced on the Resume timeline; the dedicated `/publications` page and thesis PDF are still open |

@@ -11,8 +11,8 @@ import { formatDateRange, sortKey, toSortableMonth } from '../lib/dates';
 
 // The CV PDF is dropped into public/documents/ directly (not through a
 // content collection — it's one static file, not structured data). Checked
-// at build time so the page degrades cleanly to the HTML timeline alone
-// until the file exists.
+// at build time so the download button only appears once the file exists,
+// and the page degrades cleanly to the HTML timeline alone until it does.
 const CV_PDF_PATH = '/documents/CV_SN.pdf';
 const cvPdfExists = fs.existsSync(path.join(process.cwd(), 'public', 'documents', 'CV_SN.pdf'));
 
@@ -76,33 +76,38 @@ const skillsEntry = skillsEntries[0];
 const { Content: SkillsContent } = skillsEntry ? await render(skillsEntry) : { Content: null };
 ---
 
-<BaseLayout title="Resume">
-  <PageHeader title="Resume" lede="Full curriculum vitae." />
-
-  {!hasContent && <Placeholder milestone="M2 — Resume page: embedded CV PDF and HTML mirror" />}
-
-  {cvPdfExists && (
-    <div class="mb-12">
+<BaseLayout title="Timeline">
+  <PageHeader
+    title="Timeline"
+    lede="A chronological record of education, research, and clinical experience, drawn directly from the CV."
+  >
+    {cvPdfExists && (
       <a
+        slot="action"
         href={CV_PDF_PATH}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm text-accent underline underline-offset-4"
+        download
+        class="inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper no-underline transition-colors hover:bg-accent"
       >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-4 w-4"
+          aria-hidden="true"
+        >
+          <path d="M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5" />
+          <path d="M4 14.5V16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1.5" />
+        </svg>
         Download as PDF
       </a>
-      <object
-        data={CV_PDF_PATH}
-        type="application/pdf"
-        class="mt-3 h-[75vh] w-full rounded-lg border border-rule"
-        aria-label="Shruti Nanivadekar's CV"
-      >
-        <p class="p-4 text-sm text-muted">
-          Your browser can't preview PDFs inline. <a href={CV_PDF_PATH} class="text-accent underline underline-offset-4">Download the CV</a> instead.
-        </p>
-      </object>
-    </div>
-  )}
+    )}
+  </PageHeader>
+
+  {!hasContent && <Placeholder milestone="M2 — Timeline page: CV rendered as a chronological timeline" />}
 
   {items.length > 0 && <Timeline items={items} />}
 

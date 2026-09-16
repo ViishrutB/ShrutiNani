@@ -7,7 +7,10 @@ interface Props {
 const { title, lede } = Astro.props;
 ---
 
-<div class="mb-10">
-  <h1 class="text-3xl sm:text-4xl">{title}</h1>
-  {lede && <p class="mt-3 max-w-prose text-lg text-muted">{lede}</p>}
+<div class="mb-10 flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+  <div class="min-w-0 flex-1">
+    <h1 class="text-3xl sm:text-4xl">{title}</h1>
+    {lede && <p class="mt-3 max-w-prose text-lg text-muted">{lede}</p>}
+  </div>
+  <slot name="action" />
 </div>
