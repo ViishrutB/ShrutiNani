@@ -5,7 +5,7 @@ journal: "Movement Disorders"
 year: 2024
 volume: "39(10)"
 pages: "1873-1877"
-doi: null # TODO: confirm DOI
-link: null # TODO: confirm DOI/journal link
+doi: "10.1002/mds.29928"
+link: "https://doi.org/10.1002/mds.29928"
 role: "co-author"
 ---

@@ -5,7 +5,7 @@ journal: "The Journal of Neuroscience"
 year: 2026
 volume: "46(19)"
 pages: "e1630252026"
-doi: null # TODO: confirm DOI
-link: null # TODO: confirm DOI/journal link
+doi: "10.1523/JNEUROSCI.1630-25.2026"
+link: "https://doi.org/10.1523/JNEUROSCI.1630-25.2026"
 role: "first author"
 ---

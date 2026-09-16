@@ -5,7 +5,7 @@ journal: "Neuroscience Letters"
 year: 2021
 volume: "741"
 pages: "135486"
-doi: null # TODO: confirm DOI
-link: null # TODO: confirm DOI/journal link
+doi: "10.1016/j.neulet.2020.135486"
+link: "https://doi.org/10.1016/j.neulet.2020.135486"
 role: "co-author"
 ---
