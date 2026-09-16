@@ -164,11 +164,11 @@ No open questions remain before build starts — see §9 for the remaining conte
 |---|---|---|---|
 | M0 | Content finalized (assets in §9 collected) | Source-of-truth content files ready to drop in | ☐ — checklist tracked in `README.md` |
 | M1 | Repo scaffolded, deployed empty shell | Live placeholder on Vercel at `shrutinani.com`, nav shell, design tokens (type, color, spacing) | ✅ Astro 7 + Tailwind 4 + content collections, 6 routes, `npm run test` clean, deployed via Vercel's GitHub integration (auto-deploys `main` on push), DNS pointed from Squarespace, `shrutinani.com` live over HTTPS |
-| M2 | Home + Resume pages | Landing page with identity/highlights; Resume page with embedded CV PDF + HTML mirror | ☐ |
+| M2 | Home + Resume pages | Landing page with identity/highlights; Resume page with embedded CV PDF + HTML mirror | 🟡 Resume done — embedded CV PDF, HTML timeline mirror sourced from the real CV; Home still a placeholder |
 | M3 | Bio page | Statement of Purpose rendered as the page body, testimonials collection wired up (renders empty gracefully) | ☐ |
 | M4 | Experiences page | All 10 entries rendered from content collection, grouped/filterable by theme (research/clinical/leadership) | ☐ |
-| M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | ☐ |
-| M6 | Presentations page | All 5 conference presentations, poster PDFs/images where available | ☐ |
+| M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | 🟡 All 4 papers' citations entered and surfaced on the Resume timeline; DOIs unconfirmed (not on the CV) and the dedicated `/publications` page/thesis PDF are still open |
+| M6 | Presentations page | All 5 conference presentations, poster PDFs/images where available | 🟡 All 5 entered and surfaced on the Resume timeline; poster vs. talk unconfirmed, poster files and the dedicated `/presentations` page are still open |
 | M7 | Polish pass | Responsive QA (phone/tablet/desktop), dark/light mode, SEO metadata + OG image, sitemap | ☐ |
 | M8 | Launch | `shrutinani.com` live, analytics wired up, final content proofread | 🟡 `shrutinani.com` live and auto-deploying; analytics and final proofread still open, and both wait on real content (M2–M6) |
 | M9 (stretch) | Update ergonomics | Short README/runbook for how Shruti adds a new paper/poster herself, and how Vishrut drops in a new photo/testimonial | ☐ |

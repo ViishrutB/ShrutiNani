@@ -73,11 +73,19 @@ land.
 
 - [ ] Statement of Purpose text (→ Bio page, M3)
 - [ ] The 10 finalized ERAS experience entries (→ Experiences, M4)
-- [ ] `CV_SN.pdf` (→ Resume page, M2)
-- [ ] Citation details + DOI links for the 4 papers: Science 2021, Neuroscience Letters
-      2021, Movement Disorders 2024, J Neuroscience 2026 (→ Publications, M5)
+- [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, embedded + mirrored as a timeline on
+      the Resume page (M2)
+- [x] Citation details for the 4 papers — sourced from the CV, entered under
+      `src/content/publications/` (M5's content; the page template itself is still M5)
+- [ ] DOI links for the 4 papers: Science 2021, Neuroscience Letters 2021, Movement
+      Disorders 2024, J Neuroscience 2026 — not listed anywhere on the CV, so each entry's
+      `doi`/`link` is `null # TODO` rather than guessed. Ask for these directly, or say the
+      word and Claude Code can look each one up and propose it for confirmation.
 - [ ] Doctoral thesis PDF, for direct hosting (→ Publications, M5)
-- [ ] The 5 conference presentations from the CV (→ Presentations, M6)
+- [x] The 5 conference presentations from the CV — entered under
+      `src/content/presentations/` (M6's content; the page template is still M6)
+- [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but
+      not the format; each entry's `type` is `null # TODO` rather than guessed
 
 **Non-blocking — pages render fine without these:**
 
