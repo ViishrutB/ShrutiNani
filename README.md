@@ -72,10 +72,10 @@ land.
 **Blocking real pages:**
 
 - [x] Statement of Purpose text — transcribed verbatim from the source PDF, rendered as the
-      Bio page body (M3)
+      Purpose page body (M3)
 - [ ] The 10 finalized ERAS experience entries (→ Experiences, M4)
-- [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, embedded + mirrored as a timeline on
-      the Resume page (M2)
+- [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
+      the Timeline page, with a "Download as PDF" button (M2)
 - [x] Citation details for the 4 papers — sourced from the CV, entered under
       `src/content/publications/` (M5's content; the page template itself is still M5)
 - [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified

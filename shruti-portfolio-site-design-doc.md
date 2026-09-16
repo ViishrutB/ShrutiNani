@@ -14,7 +14,7 @@ A single public URL that acts as the canonical, always-current showcase of Shrut
 - Domain: **shrutinani.com**
 - Site is **fully public**, no gating
 - Shruti will update content herself via markdown on an ongoing basis; Claude Code will be used for anything structural — infra changes, new features, layout work — rather than for routine content updates
-- Add a **Bio** page hosting the Statement of Purpose
+- Add a **Purpose** page hosting the Statement of Purpose
 - Photos, pull-quotes, and recommendation/testimonial excerpts will arrive incrementally from Vishrut over time — the content model needs a home for these from the start even though the first version may ship with few or none
 
 ---
@@ -37,7 +37,7 @@ This last row drives the architecture decision below: **content and layout must 
 
 ```
 /                    Home — name, one-line identity, headshot, 3–4 highlight stats, nav, a rotating pull-quote/testimonial if any exist
-/bio                 Bio — the Statement of Purpose, plus room for pull-quotes and testimonials as they arrive
+/bio                 Purpose — the Statement of Purpose, plus room for pull-quotes and testimonials as they arrive
 /resume              Timeline — the CV as a chronological HTML timeline (for SEO/copy-paste + ATS-style
                      readability), with a "Download as PDF" button rather than an inline PDF embed
                      (Vishrut's call: the timeline is the primary read, the PDF is a takeaway, not a
@@ -48,12 +48,12 @@ This last row drives the architecture decision below: **content and layout must 
 ```
 
 Each of these already has a source document from the residency-application work:
-- **Bio** → the Statement of Purpose (already drafted)
+- **Purpose** → the Statement of Purpose (already drafted)
 - **Experiences** → the ERAS Experiences Draft (already has clean 700–750-char copy for all 10 entries — this becomes the *summary* card; the site can carry a longer version per entry if she wants more depth than ERAS allows)
-- **Resume** → CV_SN.pdf
+- **Timeline** → CV_SN.pdf
 - **Publications** → the 4 peer-reviewed papers + thesis listed on the CV (Science 2021, Neuroscience Letters 2021, Movement Disorders 2024, J Neuroscience 2026, PhD thesis) — thesis hosted, papers link to the journal/DOI
 - **Presentations** → the 5 conference presentations listed on the CV
-- **Photos / testimonials** → no source document yet; arriving incrementally from Vishrut. Modeled as its own small content collection (see §5) so a photo or quote can be dropped in as a file, referenced from Home/Bio, with no page needing to change shape whether zero, one, or a dozen exist.
+- **Photos / testimonials** → no source document yet; arriving incrementally from Vishrut. Modeled as its own small content collection (see §5) so a photo or quote can be dropped in as a file, referenced from Home/Purpose, with no page needing to change shape whether zero, one, or a dozen exist.
 
 ---
 
@@ -133,7 +133,7 @@ featured: true                        # true = eligible to rotate on Home
 
 Publications and presentations pages are then just a `.map()` over the collection, sorted by year — new content never touches a template. The publications template renders either a `link` (→ journal/DOI, opens in new tab, small external-link icon) or a `pdf` (→ embedded viewer), whichever the entry provides — so thesis and papers use the same component with different data.
 
-The **testimonials** collection is deliberately schema-loose (every field but `quote` and `author` optional) since it will be populated a few items at a time over an unknown period — the Home and Bio pages should render gracefully with zero entries (section just doesn't appear), one entry, or many. Photos (headshots, event photos) live as plain files under `src/assets/` or `public/images/`, referenced by path from wherever they're used (Home hero, Bio page, a testimonial) — no separate "photos" content type needed unless a full gallery is wanted later.
+The **testimonials** collection is deliberately schema-loose (every field but `quote` and `author` optional) since it will be populated a few items at a time over an unknown period — the Home and Purpose pages should render gracefully with zero entries (section just doesn't appear), one entry, or many. Photos (headshots, event photos) live as plain files under `src/assets/` or `public/images/`, referenced by path from wherever they're used (Home hero, Purpose page, a testimonial) — no separate "photos" content type needed unless a full gallery is wanted later.
 
 ---
 
@@ -168,10 +168,10 @@ No open questions remain before build starts — see §9 for the remaining conte
 | M0 | Content finalized (assets in §9 collected) | Source-of-truth content files ready to drop in | ☐ — checklist tracked in `README.md` |
 | M1 | Repo scaffolded, deployed empty shell | Live placeholder on Vercel at `shrutinani.com`, nav shell, design tokens (type, color, spacing) | ✅ Astro 7 + Tailwind 4 + content collections, 6 routes, `npm run test` clean, deployed via Vercel's GitHub integration (auto-deploys `main` on push), DNS pointed from Squarespace, `shrutinani.com` live over HTTPS |
 | M2 | Home + Timeline pages | Landing page with identity/highlights; Timeline page (`/resume`) as an HTML chronological mirror of the CV with a PDF download | 🟡 Timeline done — sourced from the real CV, "Download as PDF" button; Home still a placeholder |
-| M3 | Bio page | Statement of Purpose rendered as the page body, testimonials collection wired up (renders empty gracefully) | ✅ SOP rendered as the page body; testimonials wired up and rendering gracefully at zero entries |
+| M3 | Purpose page | Statement of Purpose rendered as the page body, testimonials collection wired up (renders empty gracefully) | ✅ SOP rendered as the page body; testimonials wired up and rendering gracefully at zero entries |
 | M4 | Experiences page | All 10 entries rendered from content collection, grouped/filterable by theme (research/clinical/leadership) | ☐ |
-| M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | 🟡 All 4 papers' citations + confirmed DOIs entered and surfaced on the Resume timeline; the dedicated `/publications` page and thesis PDF are still open |
-| M6 | Presentations page | All 5 conference presentations, poster PDFs/images where available | 🟡 All 5 entered and surfaced on the Resume timeline; poster vs. talk unconfirmed, poster files and the dedicated `/presentations` page are still open |
+| M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | 🟡 All 4 papers' citations + confirmed DOIs entered and surfaced on the Timeline page; the dedicated `/publications` page and thesis PDF are still open |
+| M6 | Presentations page | All 5 conference presentations, poster PDFs/images where available | 🟡 All 5 entered and surfaced on the Timeline page; poster vs. talk unconfirmed, poster files and the dedicated `/presentations` page are still open |
 | M7 | Polish pass | Responsive QA (phone/tablet/desktop), dark/light mode, SEO metadata + OG image, sitemap | ☐ |
 | M8 | Launch | `shrutinani.com` live, analytics wired up, final content proofread | 🟡 `shrutinani.com` live and auto-deploying; analytics and final proofread still open, and both wait on real content (M2–M6) |
 | M9 (stretch) | Update ergonomics | Short README/runbook for how Shruti adds a new paper/poster herself, and how Vishrut drops in a new photo/testimonial | ☐ |

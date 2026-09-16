@@ -16,13 +16,13 @@ const { Content } = bioEntry ? await render(bioEntry) : { Content: null };
 const testimonials = (await getCollection('testimonials')).filter((t) => t.data.featured);
 ---
 
-<BaseLayout title="Bio">
-  <PageHeader title="Bio" lede="Statement of purpose." />
+<BaseLayout title="Purpose">
+  <PageHeader title="Purpose" lede="Statement of purpose." />
 
-  {!bioEntry && <Placeholder milestone="M3 — Bio page: statement of purpose" />}
+  {!bioEntry && <Placeholder milestone="M3 — Purpose page: statement of purpose" />}
 
   {Content && (
-    <div class="prose-content max-w-prose">
+    <div class="prose-content max-w-prose text-justify hyphens-auto">
       <Content />
     </div>
   )}
