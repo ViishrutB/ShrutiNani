@@ -71,16 +71,16 @@ land.
 
 **Blocking real pages:**
 
-- [ ] Statement of Purpose text (→ Bio page, M3)
+- [x] Statement of Purpose text — transcribed verbatim from the source PDF, rendered as the
+      Bio page body (M3)
 - [ ] The 10 finalized ERAS experience entries (→ Experiences, M4)
 - [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, embedded + mirrored as a timeline on
       the Resume page (M2)
 - [x] Citation details for the 4 papers — sourced from the CV, entered under
       `src/content/publications/` (M5's content; the page template itself is still M5)
-- [ ] DOI links for the 4 papers: Science 2021, Neuroscience Letters 2021, Movement
-      Disorders 2024, J Neuroscience 2026 — not listed anywhere on the CV, so each entry's
-      `doi`/`link` is `null # TODO` rather than guessed. Ask for these directly, or say the
-      word and Claude Code can look each one up and propose it for confirmation.
+- [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified
+      two ways (title/volume/pages match, and the DOI itself resolves via doi.org to that
+      exact publisher page) before Vishrut reviewed and confirmed all 4
 - [ ] Doctoral thesis PDF, for direct hosting (→ Publications, M5)
 - [x] The 5 conference presentations from the CV — entered under
       `src/content/presentations/` (M6's content; the page template is still M6)
