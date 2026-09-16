@@ -89,3 +89,46 @@
     border-radius: 2px;
   }
 }
+
+@layer components {
+  /*
+   * Spacing for markdown bodies rendered via <Content /> — currently just the
+   * Bio page's Statement of Purpose. Hand-rolled rather than pulling in
+   * Tailwind Typography: one page, a handful of rules, not worth a dependency
+   * whose defaults we'd immediately override to match the serif/sans scale.
+   */
+  .prose-content > * + * {
+    margin-top: 1.25em;
+  }
+
+  .prose-content h2,
+  .prose-content h3 {
+    margin-top: 2em;
+  }
+
+  .prose-content p {
+    line-height: 1.75;
+  }
+
+  .prose-content ul,
+  .prose-content ol {
+    padding-left: 1.5em;
+  }
+
+  .prose-content li + li {
+    margin-top: 0.5em;
+  }
+
+  .prose-content li {
+    list-style: disc;
+  }
+
+  .prose-content ol li {
+    list-style: decimal;
+  }
+
+  .prose-content a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+  }
+}

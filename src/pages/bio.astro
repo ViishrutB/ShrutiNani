@@ -1,10 +1,46 @@
 ---
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Placeholder from '../components/Placeholder.astro';
+
+// One-entry collection (see content.config.ts) — take whichever file is
+// there, since exactly one is expected.
+const bioEntries = await getCollection('bio');
+const bioEntry = bioEntries[0];
+const { Content } = bioEntry ? await render(bioEntry) : { Content: null };
+
+// Renders nothing at all, not even a heading, when empty — the design doc is
+// explicit that this section shouldn't need content to exist before the page
+// is safe to deploy.
+const testimonials = (await getCollection('testimonials')).filter((t) => t.data.featured);
 ---
 
 <BaseLayout title="Bio">
   <PageHeader title="Bio" lede="Statement of purpose." />
-  <Placeholder milestone="M3 — Bio page: statement of purpose, testimonials" />
+
+  {!bioEntry && <Placeholder milestone="M3 — Bio page: statement of purpose" />}
+
+  {Content && (
+    <div class="prose-content max-w-prose">
+      <Content />
+    </div>
+  )}
+
+  {testimonials.length > 0 && (
+    <section class="mt-14 border-t border-rule pt-10">
+      <h2 class="text-xl">What people say</h2>
+      <ul class="mt-6 space-y-8">
+        {testimonials.map((t) => (
+          <li>
+            <blockquote class="max-w-prose text-lg italic text-ink">&ldquo;{t.data.quote}&rdquo;</blockquote>
+            <p class="mt-2 text-sm text-muted">
+              — {t.data.author}
+              {t.data.role ? `, ${t.data.role}` : ''}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </BaseLayout>

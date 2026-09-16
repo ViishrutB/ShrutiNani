@@ -78,11 +78,67 @@ const presentations = defineCollection({
     year: z.number(),
     // Displayed verbatim under the year, e.g. "November 2023".
     date: z.string().optional(),
-    type: z.enum(['Poster', 'Talk']),
+    // Nullable, not required: the source CV lists title/venue/year for each
+    // presentation but doesn't say poster vs. talk, and that's a real fact to
+    // confirm, not guess. Renders as a generic "Presentation" until set.
+    type: z.enum(['Poster', 'Talk']).nullable().default(null), // TODO: confirm poster vs. talk
     // Shruti's own posters are hers to host outright.
     pdf: z.string().nullable().default(null),
     image: z.string().nullable().default(null),
     tags: z.array(z.string()).default([]),
+  }),
+});
+
+/**
+ * CV line items that don't already have a dedicated collection: education,
+ * positions, honors/awards, certifications and licensure. Publications and
+ * presentations already exist as their own collections (§3 of the design doc:
+ * both are sourced from the CV), so the Resume page pulls those in directly
+ * rather than duplicating them here — one source of truth per fact.
+ *
+ * `category` is a free-form string, not an enum, because we don't yet know the
+ * exact section headings on Shruti's real CV and guessing one wrong would fail
+ * the build on real content rather than catching an actual mistake.
+ */
+const resume = defineCollection({
+  loader: markdownIn('resume'),
+  schema: z.object({
+    title: z.string(),
+    org: z.string().optional(),
+    location: z.string().optional(),
+    category: z.string(),
+    // "YYYY" or "YYYY-MM" — permissive because not every CV line needs month
+    // precision (a degree year doesn't; a certification date might), but both
+    // forms sort correctly on the timeline. See src/lib/dates.ts.
+    startDate: z.string().regex(/^\d{4}(-\d{2})?$/, 'use YYYY or YYYY-MM'),
+    endDate: z
+      .string()
+      .regex(/^\d{4}(-\d{2})?$/, 'use YYYY or YYYY-MM')
+      .nullable()
+      .default(null),
+    // true renders "Present" instead of an end date, and sorts to the top.
+    ongoing: z.boolean().default(false),
+    // One line shown under the title — a role description, a thesis title.
+    summary: z.string().optional(),
+    // A CV entry is usually a bullet list, not a paragraph — this is what
+    // actually renders under the title on the timeline. `summary` alone is
+    // enough for a one-line entry (an award, a degree); use `highlights` for
+    // anything with real bullets (a position, a role).
+    highlights: z.array(z.string()).default([]),
+  }),
+});
+
+/**
+ * A short, non-chronological block below the timeline — the CV's "Technical
+ * Strengths" section (languages, software, tools). Doesn't fit the resume
+ * collection's dated-entry shape, and isn't worth a dedicated schema for three
+ * rows that rarely change, so it's a singleton markdown body like `bio`,
+ * reusing the same prose-content rendering.
+ */
+const skills = defineCollection({
+  loader: markdownIn('skills'),
+  schema: z.object({
+    title: z.string().default('Technical Strengths'),
   }),
 });
 
@@ -104,4 +160,26 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { experiences, publications, presentations, testimonials };
+/**
+ * The Statement of Purpose. Modeled as a one-entry collection (rather than a
+ * field in a single config file) so its text lives as a markdown file like
+ * everything else Shruti edits — ground rule 1 in SKILL.md: data about her
+ * never gets hardcoded into a .astro page. If a second entry ever appears,
+ * the Bio page uses whichever one it finds first, so keep it to one file.
+ */
+const bio = defineCollection({
+  loader: markdownIn('bio'),
+  schema: z.object({
+    title: z.string().default('Statement of Purpose'),
+  }),
+});
+
+export const collections = {
+  experiences,
+  publications,
+  presentations,
+  testimonials,
+  resume,
+  bio,
+  skills,
+};
