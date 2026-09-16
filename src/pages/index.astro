@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../site.config';
+---
+
+<BaseLayout>
+  <div class="mb-12">
+    <h1 class="text-4xl sm:text-5xl">{site.name}</h1>
+    <p class="mt-4 max-w-prose text-lg text-muted">{site.tagline}</p>
+  </div>
+
+  <Placeholder milestone="M2 — Home page: headshot, highlight stats, rotating pull-quote" />
+</BaseLayout>

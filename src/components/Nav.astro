@@ -1,0 +1,39 @@
+---
+import { navLinks, site } from '../site.config';
+
+const { pathname } = Astro.url;
+// Normalize so `/bio` and `/bio/` highlight the same link.
+const current = pathname.replace(/\/+$/, '') || '/';
+---
+
+<header class="border-b border-rule">
+  <div class="mx-auto flex max-w-3xl flex-col gap-3 px-6 py-5 sm:flex-row sm:items-baseline sm:justify-between">
+    <a href="/" class="font-serif text-lg font-semibold text-ink no-underline hover:text-accent">
+      {site.name}
+    </a>
+
+    <nav aria-label="Main">
+      <ul class="-mx-2 flex flex-wrap items-baseline gap-x-1 gap-y-1 text-sm">
+        {
+          navLinks.map(({ label, href }) => {
+            const isCurrent = current === href.replace(/\/+$/, '') || (href === '/' && current === '/');
+            return (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  class:list={[
+                    'rounded px-2 py-1 no-underline transition-colors',
+                    isCurrent ? 'font-medium text-ink' : 'text-muted hover:text-ink',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

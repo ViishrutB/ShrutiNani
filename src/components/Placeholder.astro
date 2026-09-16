@@ -1,0 +1,20 @@
+---
+/**
+ * Marks a page that is scaffolded but not yet populated. Visible on purpose —
+ * an obviously-empty section is honest; a page that quietly renders nothing
+ * looks broken. Delete the usage when the real content lands.
+ */
+interface Props {
+  milestone: string;
+}
+
+const { milestone } = Astro.props;
+---
+
+<div class="rounded-lg border border-dashed border-rule bg-paper-raised px-5 py-6 text-sm text-muted">
+  <p class="font-medium text-ink">Not built yet — {milestone}.</p>
+  <p class="mt-1">
+    This page is scaffolded so the deploy pipeline is proven before content lands. See the
+    milestone table in the design doc.
+  </p>
+</div>
