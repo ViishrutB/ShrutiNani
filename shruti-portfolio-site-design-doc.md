@@ -163,14 +163,14 @@ No open questions remain before build starts — see §9 for the remaining conte
 | # | Milestone | Output | Status |
 |---|---|---|---|
 | M0 | Content finalized (assets in §9 collected) | Source-of-truth content files ready to drop in | ☐ — checklist tracked in `README.md` |
-| M1 | Repo scaffolded, deployed empty shell | Live placeholder on Vercel at `shrutinani.com`, nav shell, design tokens (type, color, spacing) | 🟡 Scaffold done (Astro 7 + Tailwind 4 + content collections, 6 routes, `npm run test` clean); Vercel deploy deferred to M8 |
+| M1 | Repo scaffolded, deployed empty shell | Live placeholder on Vercel at `shrutinani.com`, nav shell, design tokens (type, color, spacing) | ✅ Astro 7 + Tailwind 4 + content collections, 6 routes, `npm run test` clean, deployed via Vercel's GitHub integration (auto-deploys `main` on push), DNS pointed from Squarespace, `shrutinani.com` live over HTTPS |
 | M2 | Home + Resume pages | Landing page with identity/highlights; Resume page with embedded CV PDF + HTML mirror | ☐ |
 | M3 | Bio page | Statement of Purpose rendered as the page body, testimonials collection wired up (renders empty gracefully) | ☐ |
 | M4 | Experiences page | All 10 entries rendered from content collection, grouped/filterable by theme (research/clinical/leadership) | ☐ |
 | M5 | Publications page | All 4 papers linking to journal/DOI + thesis with embedded PDF viewer, formatted citations | ☐ |
 | M6 | Presentations page | All 5 conference presentations, poster PDFs/images where available | ☐ |
 | M7 | Polish pass | Responsive QA (phone/tablet/desktop), dark/light mode, SEO metadata + OG image, sitemap | ☐ |
-| M8 | Launch | `shrutinani.com` live, analytics wired up, final content proofread | ☐ — blocked on Vercel account access |
+| M8 | Launch | `shrutinani.com` live, analytics wired up, final content proofread | 🟡 `shrutinani.com` live and auto-deploying; analytics and final proofread still open, and both wait on real content (M2–M6) |
 | M9 (stretch) | Update ergonomics | Short README/runbook for how Shruti adds a new paper/poster herself, and how Vishrut drops in a new photo/testimonial | ☐ |
 
 Each milestone is a natural handoff point for Claude Code — small enough to review in one sitting, and each ends with something visibly deployed rather than code sitting unreviewed.

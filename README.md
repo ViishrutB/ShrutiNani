@@ -87,12 +87,26 @@ land.
 - [ ] Poster PDFs or high-res images (5 total)
 - [ ] Profile links: Google Scholar, ORCID, LinkedIn, and whether to publish an email
 - [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
+- [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
+      doesn't cover it — apex domain works fine as the canonical URL in the meantime)
 
 **Known open questions** (from `SKILL.md`): the confirmed institution and dates for the
 neurology sub-internship experience, and the content for the "Neurology AI" experience.
 
 ## Deploying
 
-Not wired up yet (M8). The plan is Vercel — git-push-to-deploy with `shrutinani.com`
-pointed at it via DNS. `npm run build` outputs a plain static site to `dist/`, so any static
-host works if that changes.
+Live at [shrutinani.com](https://shrutinani.com), hosted on Vercel via its GitHub
+integration: every push to `main` triggers a production deploy automatically, and every
+other branch or PR gets its own preview URL. This is also what lets Shruti edit a markdown
+file straight on GitHub — that commit deploys itself, no one needs to run anything locally.
+
+DNS is pointed at Vercel from Squarespace (the domain registrar). `www.shrutinani.com`
+resolves but its SSL cert doesn't cover it yet — not blocking, since the apex domain is the
+canonical URL everywhere in this repo, but worth adding as a domain in Vercel's dashboard
+(or redirecting to apex) at some point.
+
+Analytics and a final content proofread (the rest of M8) are on hold until the real content
+in M2–M6 lands.
+
+`npm run build` outputs a plain static site to `dist/`, so any static host works if the
+choice of Vercel ever changes.
