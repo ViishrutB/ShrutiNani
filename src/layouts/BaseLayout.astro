@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { title, description = site.description } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
 ---
 
@@ -39,6 +39,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
       })();
     </script>
     <link rel="canonical" href={canonical} />
+    <!--
+      Newsreader (headings, editorial moments) + IBM Plex Sans (body, nav,
+      data). Never actually loaded before this — "Source Serif 4" was a
+      font-family fallback stack with no @font-face or <link> behind it, so
+      every visitor was silently seeing their browser's default serif.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 

@@ -5,10 +5,49 @@ import { site } from '../site.config';
 ---
 
 <BaseLayout>
-  <div class="mb-12">
-    <h1 class="text-4xl sm:text-5xl">{site.name}</h1>
-    <p class="mt-4 max-w-prose text-lg text-muted">{site.tagline}</p>
+  <div class="mb-8 grid grid-cols-[96px_1fr] items-start gap-6 sm:grid-cols-[128px_1fr] sm:gap-7">
+    <div
+      class="flex aspect-square items-center justify-center rounded-md border border-rule bg-paper-raised px-2 text-center text-[0.7rem] text-muted"
+    >
+      headshot<br />pending
+    </div>
+    <div>
+      <h1 class="text-4xl sm:text-5xl">{site.name}</h1>
+      <p class="mt-2 font-serif text-xl italic text-muted">{site.tagline.role}</p>
+      <p class="mt-1 max-w-prose text-ink">{site.tagline.focus}</p>
+    </div>
   </div>
 
-  <Placeholder milestone="M2 — Home page: headshot, highlight stats, rotating pull-quote" />
+  <!--
+    The site's one deliberate "bold" visual moment, spent here and nowhere
+    else — see the design review in the project's chat history for why. Not a
+    generic decorative wave: it's a simplified deep brain stimulation pulse
+    train interrupting a tremor-frequency oscillation, which is literally her
+    research subject, not an aesthetic flourish borrowed from somewhere else.
+  -->
+  <svg
+    viewBox="0 0 720 64"
+    preserveAspectRatio="none"
+    role="img"
+    aria-label="Stylized deep brain stimulation pulse trace"
+    class="mb-1 mt-9 h-12 w-full sm:mt-10"
+  >
+    <line x1="0" y1="48" x2="720" y2="48" stroke="var(--rule)" stroke-width="1" />
+    <path
+      d="M0,48 L40,48 L40,20 L48,20 L48,48 L120,48 L120,20 L128,20 L128,48 L200,48
+         C 230,48 236,10 260,10 C 284,10 290,48 320,48
+         L 360,48 L 360,20 L 368,20 L 368,48 L 440,48 L 440,20 L 448,20 L 448,48 L 520,48
+         C 550,48 556,10 580,10 C 604,10 610,48 640,48 L 720,48"
+      fill="none"
+      stroke="var(--accent)"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <p class="mb-10 text-xs text-muted">
+    a deep brain stimulation pulse train, paired with the tremor rhythm it interrupts
+  </p>
+
+  <Placeholder milestone="M2 — Home page: highlight stats, rotating pull-quote" />
 </BaseLayout>

@@ -28,7 +28,12 @@ const testimonials = (await getCollection('testimonials')).filter((t) => t.data.
     // were running ~95+ characters. Justified text wants a narrower column
     // than ragged-right does (that's why newspapers set it in columns, not
     // full-width) or the word-spacing stretches get visibly uneven.
-    <div class="prose-content max-w-[58ch] text-justify hyphens-auto">
+    //
+    // font-serif + text-lg here specifically: this is the one page on the
+    // site meant to read as a personal essay rather than reference material
+    // (the Timeline's Technical Strengths block reuses .prose-content too,
+    // and stays in the body sans — it's data, not narrative).
+    <div class="prose-content essay max-w-[58ch] text-justify hyphens-auto font-serif text-lg">
       <Content />
     </div>
   )}
@@ -50,3 +55,20 @@ const testimonials = (await getCollection('testimonials')).filter((t) => t.data.
     </section>
   )}
 </BaseLayout>
+
+<style>
+  /*
+   * A functional drop cap — it marks where the essay begins, the one place
+   * on the page that gets a typographic flourish, rather than decorating
+   * every paragraph the same way. Vermilion ties it to the site's one accent
+   * color instead of introducing a second one just for this.
+   */
+  .essay :global(p:first-of-type)::first-letter {
+    float: left;
+    font-size: 3.2em;
+    line-height: 0.82;
+    padding: 0.03em 0.08em 0 0;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

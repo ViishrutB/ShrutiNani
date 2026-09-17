@@ -9,10 +9,16 @@
 
 export const site = {
   name: 'Shruti Nanivadekar',
-  // TODO(vishrut): confirm the final tagline — design doc §9 lists this as an
-  // outstanding item and the string below is the doc's *example*, not a
-  // signed-off line.
-  tagline: 'MD-PhD Candidate · Neurology · Physician-Scientist',
+  // TODO(vishrut): confirm final wording — design doc §9 lists the tagline as
+  // an outstanding item and this is the doc's *example*, not signed off.
+  // Two lines, not one string of fields chained with middle dots: `role` is
+  // the credential (also used as the <title> fallback — see BaseLayout),
+  // `focus` is an actual sentence about the research, not another fragment
+  // stitched on with a "·".
+  tagline: {
+    role: 'MD-PhD Candidate in Neurology',
+    focus: 'Physician-scientist studying deep brain stimulation and motor circuits.',
+  },
   description:
     'Academic portfolio of Shruti Nanivadekar — clinical experience, publications, and conference presentations.',
   url: 'https://shrutinani.com',

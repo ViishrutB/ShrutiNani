@@ -128,11 +128,18 @@ blocked on missing material instead.
 
 ## Visual design
 
-Not finalized. The current Tailwind theme (`tailwind.config.mjs`: an ink/paper/accent/muted
-palette, serif headings over sans body text) is a reasonable placeholder, not a signed-off
-direction. Small, incremental CSS improvements are fine; don't do a full visual redesign
-until Vishrut shares direction (a UI design doc is coming separately). When making even small
-visual calls in the meantime, default to restraint and consistency over decoration.
+Finalized: "Signal & Circuit," approved by Vishrut. Tokens live in
+`src/styles/global.css` (Tailwind v4 config is CSS, not `tailwind.config.mjs` — that file
+doesn't exist in this repo). Grounded in the actual subject matter rather than a generic
+academic template: Newsreader (headlines, the Purpose essay) + IBM Plex Sans (body/data),
+a cool-neutral paper/ink base, a vermilion `accent` reserved for anything interactive plus
+the one deliberate bold moment (Home's DBS-pulse-trace SVG), and a separate indigo `trace`
+token for structural/chronological markers (the Timeline's category rules) — two accent
+roles, not one color doing both jobs. Two "reads as AI-generated" tells got fixed as part of
+this pass and shouldn't come back: no tracked-out ALL-CAPS eyebrow labels, no meta strings
+joined with middle dots (`Field · Field · Field`) — give each fact its own line instead.
+Small incremental CSS improvements within this system are fine; a *different* direction
+again is a decision for Vishrut, same as this one was.
 
 ## When to ask rather than guess
 

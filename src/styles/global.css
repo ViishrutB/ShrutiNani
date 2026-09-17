@@ -1,7 +1,16 @@
 @import 'tailwindcss';
 
 /*
- * Design tokens.
+ * Design tokens — "Signal & Circuit".
+ *
+ * Grounded in the actual subject matter: Shruti studies deep brain
+ * stimulation, translating electrical signals into restored movement. That
+ * gives the palette its two accent roles — `accent` ("signal", a vermilion
+ * red) for anything interactive, and `trace` (a deep indigo) for structural/
+ * chronological markers like the Timeline's category rules — instead of one
+ * generic link-blue doing both jobs. Everything else stays disciplined and
+ * near-monochrome; the accent is spent in a few deliberate places, not
+ * washed across the page.
  *
  * The palette is defined twice — once light, once dark — as plain CSS custom
  * properties, then handed to Tailwind via `@theme inline` so that utilities
@@ -9,39 +18,42 @@
  * means no `dark:` variant is needed on ordinary surface/text colors.
  *
  * Dark mode follows the OS by default. `data-theme` on <html> overrides it in
- * both directions, which is what the M7 toggle will set.
+ * both directions — see ThemeToggle.astro.
  */
 
 :root {
-  --paper: oklch(99% 0.004 85);
-  --paper-raised: oklch(97% 0.006 85);
-  --ink: oklch(23% 0.012 260);
-  --ink-muted: oklch(50% 0.014 260);
-  --rule: oklch(90% 0.007 260);
-  --accent: oklch(46% 0.12 250);
-  --accent-soft: oklch(95% 0.03 250);
+  --paper: oklch(98% 0.006 240);
+  --paper-raised: oklch(95% 0.008 240);
+  --ink: oklch(19% 0.02 265);
+  --ink-muted: oklch(52% 0.02 260);
+  --rule: oklch(88% 0.008 250);
+  --accent: oklch(58% 0.19 27);
+  --accent-soft: oklch(94% 0.04 30);
+  --trace: oklch(42% 0.1 268);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --paper: oklch(19% 0.012 260);
-    --paper-raised: oklch(23% 0.014 260);
-    --ink: oklch(94% 0.006 85);
-    --ink-muted: oklch(70% 0.012 260);
-    --rule: oklch(31% 0.014 260);
-    --accent: oklch(78% 0.1 250);
-    --accent-soft: oklch(28% 0.04 250);
+    --paper: oklch(16% 0.02 265);
+    --paper-raised: oklch(21% 0.02 265);
+    --ink: oklch(95% 0.006 240);
+    --ink-muted: oklch(68% 0.02 260);
+    --rule: oklch(30% 0.02 265);
+    --accent: oklch(70% 0.17 30);
+    --accent-soft: oklch(28% 0.06 30);
+    --trace: oklch(68% 0.1 268);
   }
 }
 
 :root[data-theme='dark'] {
-  --paper: oklch(19% 0.012 260);
-  --paper-raised: oklch(23% 0.014 260);
-  --ink: oklch(94% 0.006 85);
-  --ink-muted: oklch(70% 0.012 260);
-  --rule: oklch(31% 0.014 260);
-  --accent: oklch(78% 0.1 250);
-  --accent-soft: oklch(28% 0.04 250);
+  --paper: oklch(16% 0.02 265);
+  --paper-raised: oklch(21% 0.02 265);
+  --ink: oklch(95% 0.006 240);
+  --ink-muted: oklch(68% 0.02 260);
+  --rule: oklch(30% 0.02 265);
+  --accent: oklch(70% 0.17 30);
+  --accent-soft: oklch(28% 0.06 30);
+  --trace: oklch(68% 0.1 268);
 }
 
 @theme inline {
@@ -52,10 +64,18 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-trace: var(--trace);
 
-  --font-serif: 'Source Serif 4', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
+  /*
+   * Utility classes stay `font-serif`/`font-sans` — only the typefaces they
+   * point at changed (Newsreader, IBM Plex Sans) — so no component needed
+   * touching just to pick up the new type. Loaded via Google Fonts in
+   * BaseLayout's <head>; previously "Source Serif 4" was never actually
+   * loaded anywhere, so every visitor was silently seeing a fallback serif.
+   */
+  --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
 }
 
 @layer base {
@@ -92,10 +112,11 @@
 
 @layer components {
   /*
-   * Spacing for markdown bodies rendered via <Content /> — currently just the
-   * Bio page's Statement of Purpose. Hand-rolled rather than pulling in
-   * Tailwind Typography: one page, a handful of rules, not worth a dependency
-   * whose defaults we'd immediately override to match the serif/sans scale.
+   * Spacing for markdown bodies rendered via <Content /> — the Purpose
+   * page's Statement of Purpose, and the Timeline's Technical Strengths
+   * block. Hand-rolled rather than pulling in Tailwind Typography: two
+   * pages, a handful of rules, not worth a dependency whose defaults we'd
+   * immediately override to match the serif/sans scale.
    */
   .prose-content > * + * {
     margin-top: 1.25em;
