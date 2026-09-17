@@ -21,23 +21,34 @@ import { site } from '../site.config';
   <!--
     The site's one deliberate "bold" visual moment, spent here and nowhere
     else — see the design review in the project's chat history for why. Not a
-    generic decorative wave: it's a simplified deep brain stimulation pulse
-    train interrupting a tremor-frequency oscillation, which is literally her
-    research subject, not an aesthetic flourish borrowed from somewhere else.
+    generic decorative wave: it traces a specific clinical story, left to
+    right — bradykinesia (small, sluggish movement — the shallow humps),
+    deep brain stimulation being applied (the pulse train), then movement
+    amplitude restored (the larger humps). That's literally her thesis
+    subject, not an aesthetic flourish borrowed from somewhere else.
   -->
   <svg
     viewBox="0 0 720 64"
     preserveAspectRatio="none"
     role="img"
-    aria-label="Stylized deep brain stimulation pulse trace"
+    aria-label="Stylized trace of bradykinesia being corrected by deep brain stimulation: small, slow movement, a burst of stimulation pulses, then restored movement amplitude"
     class="mb-1 mt-9 h-12 w-full sm:mt-10"
   >
     <line x1="0" y1="48" x2="720" y2="48" stroke="var(--rule)" stroke-width="1" />
     <path
-      d="M0,48 L40,48 L40,20 L48,20 L48,48 L120,48 L120,20 L128,20 L128,48 L200,48
-         C 230,48 236,10 260,10 C 284,10 290,48 320,48
-         L 360,48 L 360,20 L 368,20 L 368,48 L 440,48 L 440,20 L 448,20 L 448,48 L 520,48
-         C 550,48 556,10 580,10 C 604,10 610,48 640,48 L 720,48"
+      d="M0,48 L40,48
+         C 65,48 70,40 82,40 C 94,40 99,48 125,48
+         C 150,48 155,40 167,40 C 179,40 184,48 220,48
+         L260,48
+         L270,48 L270,22 L278,22 L278,48
+         L305,48 L305,22 L313,22 L313,48
+         L340,48 L340,22 L348,22 L348,48
+         L375,48 L375,22 L383,22 L383,48
+         L460,48
+         L500,48
+         C 520,48 524,14 540,14 C 556,14 560,48 585,48
+         C 605,48 609,14 625,14 C 641,14 645,48 680,48
+         L720,48"
       fill="none"
       stroke="var(--accent)"
       stroke-width="1.75"
@@ -46,7 +57,7 @@ import { site } from '../site.config';
     />
   </svg>
   <p class="mb-10 text-xs text-muted">
-    a deep brain stimulation pulse train, paired with the tremor rhythm it interrupts
+    bradykinesia — reduced movement amplitude — restored after deep brain stimulation
   </p>
 
   <Placeholder milestone="M2 — Home page: highlight stats, rotating pull-quote" />
