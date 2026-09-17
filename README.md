@@ -81,9 +81,8 @@ land.
 - [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified
       two ways (title/volume/pages match, and the DOI itself resolves via doi.org to that
       exact publisher page) before Vishrut reviewed and confirmed all 4
-- [ ] Doctoral thesis PDF, for direct hosting — on its way from Vishrut; the Publications page
-      already has a slot for it (embedded viewer + download button) that lights up as soon as
-      the file is added and `thesis.md`'s `pdf:` field points at it (→ Publications, M5)
+- [x] Doctoral thesis PDF — hosted at `/documents/nanivadekar-thesis-2025.pdf`, embedded
+      viewer + download button live on the Publications page (M5)
 - [x] The 5 conference presentations from the CV — entered under
       `src/content/presentations/` (M6's content; the page template is still M6)
 - [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but
