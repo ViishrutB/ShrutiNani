@@ -6,6 +6,12 @@
  * no framework, just enough inline JS to toggle `hidden`. Progressive
  * enhancement: with JS disabled, every entry stays visible and the pills are
  * inert, which is a reasonable "no filtering" fallback, not a broken page.
+ *
+ * Doubles as the categorical palette's legend — each pill's dot uses the same
+ * --cat-* custom properties Timeline.astro defines, so this is the one place
+ * that documents what each color means (the dataviz skill requires a legend
+ * for any categorical encoding with 2+ series; reusing the filter bar avoids
+ * a second, redundant color key).
  */
 interface Props {
   categories: string[];
@@ -26,6 +32,7 @@ const { categories } = Astro.props;
   {
     categories.map((category) => (
       <button type="button" data-filter={category} aria-pressed="false" class="timeline-filter-pill">
+        <span class="pill-dot" aria-hidden="true" />
         {category}
       </button>
     ))
@@ -34,6 +41,9 @@ const { categories } = Astro.props;
 
 <style>
   .timeline-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     border-radius: 9999px;
     border: 1px solid var(--rule);
     padding: 0.375rem 0.875rem;
@@ -57,6 +67,37 @@ const { categories } = Astro.props;
     background: var(--ink);
     border-color: var(--ink);
     color: var(--paper);
+  }
+
+  /* Same categorical palette Timeline.astro defines on :root — see that
+     component for the validation notes. The "All" pill has no dot: it isn't
+     one category, it's the absence of a filter. */
+  .pill-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--trace);
+  }
+  [data-filter='Education'] .pill-dot {
+    background: var(--cat-education);
+  }
+  [data-filter='Research Experience'] .pill-dot {
+    background: var(--cat-research);
+  }
+  [data-filter='Leadership Experience'] .pill-dot {
+    background: var(--cat-leadership);
+  }
+  [data-filter='Honors & Awards'] .pill-dot {
+    background: var(--cat-honors);
+  }
+  [data-filter='Publication'] .pill-dot {
+    background: var(--cat-publication);
+  }
+  [data-filter='Doctoral Thesis'] .pill-dot {
+    background: var(--cat-thesis);
+  }
+  [data-filter='Presentation'] .pill-dot {
+    background: var(--cat-presentation);
   }
 </style>
 

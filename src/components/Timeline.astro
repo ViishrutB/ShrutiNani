@@ -13,13 +13,16 @@ const { items } = Astro.props;
     <ol id="timeline-list" class="divide-y divide-rule">
       {items.map((item) => (
         <li class="tl-entry py-5 first:pt-0" data-category={item.category}>
-          {/* Structural marker, not decoration: a colored rule reads faster
-             than a text label, and doesn't need ALL-CAPS + letter-spacing to
-             be noticed. One color (--trace) for every entry — chronology is
-             what's being marked here, not a category-by-category rainbow. */}
-          <span class="rounded-full bg-trace" aria-hidden="true" />
+          {/* Color carries identity (which category), the text label carries
+             the reading — never the reverse. The swatch is a categorical
+             palette (7 hues, validated for CVD separation and contrast per
+             mode — see the color-coded key in TimelineFilters.astro); the
+             label next to it stays in ordinary ink, per the same rule links
+             and everything else on this site follow: a colored mark sits
+             beside text, it doesn't replace it. */}
+          <span class="tl-swatch rounded-full" aria-hidden="true" />
           <div>
-            <p class="text-sm font-medium text-trace">{item.category}</p>
+            <p class="text-sm font-medium text-muted">{item.category}</p>
             <h3 class="mt-0.5 text-lg font-semibold text-ink">
               {item.href ? (
                 <a
@@ -68,6 +71,78 @@ const { items } = Astro.props;
 }
 
 <style>
+  /*
+   * Seven-hue categorical palette (dataviz skill's validated default,
+   * reordered so the closest hue to the site's own --accent — red — is
+   * dropped rather than risking it read as "this is a link"). Adjacent-pair
+   * CVD separation and contrast both validated with `validate_palette.js`
+   * against this site's actual light/dark surfaces — all-pairs does not
+   * clear the same floor at 7 slots (only the first 3 do, per the skill's
+   * own reference data), which is why the category name is always printed
+   * in plain ink right beside the swatch: color speeds up scanning, the
+   * text is what actually carries the identity.
+   *
+   * "Presentation" is the fallback category (see src/lib/timeline.ts) until
+   * poster-vs-talk is confirmed — it and any future category default to
+   * --trace via the base rule below, so nothing ever renders uncolored.
+   */
+  :global(:root) {
+    --cat-education: #2a78d6;
+    --cat-research: #eb6834;
+    --cat-leadership: #1baf7a;
+    --cat-honors: #eda100;
+    --cat-publication: #e87ba4;
+    --cat-thesis: #008300;
+    --cat-presentation: #4a3aa7;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) {
+      --cat-education: #3987e5;
+      --cat-research: #d95926;
+      --cat-leadership: #199e70;
+      --cat-honors: #c98500;
+      --cat-publication: #d55181;
+      --cat-thesis: #008300;
+      --cat-presentation: #9085e9;
+    }
+  }
+
+  :global(:root[data-theme='dark']) {
+    --cat-education: #3987e5;
+    --cat-research: #d95926;
+    --cat-leadership: #199e70;
+    --cat-honors: #c98500;
+    --cat-publication: #d55181;
+    --cat-thesis: #008300;
+    --cat-presentation: #9085e9;
+  }
+
+  .tl-swatch {
+    background: var(--trace);
+  }
+  [data-category='Education'] .tl-swatch {
+    background: var(--cat-education);
+  }
+  [data-category='Research Experience'] .tl-swatch {
+    background: var(--cat-research);
+  }
+  [data-category='Leadership Experience'] .tl-swatch {
+    background: var(--cat-leadership);
+  }
+  [data-category='Honors & Awards'] .tl-swatch {
+    background: var(--cat-honors);
+  }
+  [data-category='Publication'] .tl-swatch {
+    background: var(--cat-publication);
+  }
+  [data-category='Doctoral Thesis'] .tl-swatch {
+    background: var(--cat-thesis);
+  }
+  [data-category='Presentation'] .tl-swatch {
+    background: var(--cat-presentation);
+  }
+
   /*
    * Grid instead of the old border-left-line-plus-absolute-dot: each entry
    * gets its own short colored rule rather than crossing a continuous line,
