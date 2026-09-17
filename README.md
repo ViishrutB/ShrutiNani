@@ -76,12 +76,14 @@ land.
 - [ ] The 10 finalized ERAS experience entries (→ Experiences, M4)
 - [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
       the Timeline page, with a "Download as PDF" button (M2)
-- [x] Citation details for the 4 papers — sourced from the CV, entered under
-      `src/content/publications/` (M5's content; the page template itself is still M5)
+- [x] Citation details for the 4 papers, page built and live at `/publications` — each
+      links out to its journal/DOI, her name bolded in the byline (M5)
 - [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified
       two ways (title/volume/pages match, and the DOI itself resolves via doi.org to that
       exact publisher page) before Vishrut reviewed and confirmed all 4
-- [ ] Doctoral thesis PDF, for direct hosting (→ Publications, M5)
+- [ ] Doctoral thesis PDF, for direct hosting — on its way from Vishrut; the Publications page
+      already has a slot for it (embedded viewer + download button) that lights up as soon as
+      the file is added and `thesis.md`'s `pdf:` field points at it (→ Publications, M5)
 - [x] The 5 conference presentations from the CV — entered under
       `src/content/presentations/` (M6's content; the page template is still M6)
 - [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but
@@ -93,7 +95,8 @@ land.
       design doc's *example*, not signed off)
 - [ ] Current headshot
 - [ ] Poster PDFs or high-res images (5 total)
-- [ ] Profile links: Google Scholar, ORCID, LinkedIn, and whether to publish an email
+- [x] LinkedIn and email — both live in the footer as icon links
+- [ ] Google Scholar and ORCID profile links
 - [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
 - [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
       doesn't cover it — apex domain works fine as the canonical URL in the meantime)
