@@ -282,10 +282,25 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
    * Escape-to-close, and top-layer stacking. Flex-column layout so the PDF
    * frame fills whatever space the title bar doesn't, rather than a fixed
    * height fighting the bar's actual rendered size.
+   *
+   * `display` lives on the `[open]` variant, not the bare class: a browser's
+   * own UA stylesheet hides a <dialog> by default until it's opened, but
+   * that default only holds until an AUTHOR stylesheet declares `display`
+   * for the same element — origin beats specificity in the cascade, so even
+   * a plain class selector here overrides the browser's built-in hidden
+   * state. Putting a bare `.pdf-modal { display: flex }` was exactly that
+   * mistake: it forced the dialog visible (in-flow, unstyled positioning)
+   * on every page load, closed or not. Scoping it to `[open]` — the
+   * attribute `showModal()`/`close()` actually toggle — leaves the closed
+   * state to the browser's own default and only takes over once it's
+   * genuinely open.
    */
-  .pdf-modal {
+  .pdf-modal[open] {
     display: flex;
     flex-direction: column;
+  }
+
+  .pdf-modal {
     width: min(920px, 92vw);
     height: min(88vh, 1000px);
     padding: 0;
