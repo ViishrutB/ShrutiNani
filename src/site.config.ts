@@ -31,8 +31,8 @@ export const profileLinks: ReadonlyArray<{ label: string; href: string | null }>
 
 export const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Purpose', href: '/bio' },
-  { label: 'Timeline', href: '/resume' },
+  { label: 'Purpose', href: '/purpose' },
+  { label: 'Timeline', href: '/timeline' },
   { label: 'Experiences', href: '/experiences' },
   { label: 'Publications', href: '/publications' },
   { label: 'Presentations', href: '/presentations' },
