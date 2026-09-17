@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Timeline from '../components/Timeline.astro';
-import TimelineFilters from '../components/TimelineFilters.astro';
+import FilterPills from '../components/FilterPills.astro';
 import { orderCategories, type TimelineItem } from '../lib/timeline';
 import { formatDateRange, sortKey, toSortableMonth } from '../lib/dates';
 
@@ -108,7 +108,15 @@ const { Content: SkillsContent } = skillsEntry ? await render(skillsEntry) : { C
 
   {!hasContent && <Placeholder milestone="M2 — Timeline page: CV rendered as a chronological timeline" />}
 
-  {items.length > 1 && <TimelineFilters categories={categories} />}
+  {items.length > 1 && (
+    <FilterPills
+      listId="timeline-list"
+      itemAttribute="category"
+      values={categories}
+      label="Filter the timeline by category"
+      withDots
+    />
+  )}
 
   {items.length > 0 && <Timeline items={items} />}
 

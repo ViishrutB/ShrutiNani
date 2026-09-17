@@ -121,25 +121,38 @@ const { items } = Astro.props;
   .tl-swatch {
     background: var(--trace);
   }
-  [data-category='Education'] .tl-swatch {
+  /*
+   * Each rule pairs the entry's own swatch (rendered here, in this
+   * component — an ordinary scoped selector) with the matching filter
+   * pill's dot (rendered by the separate FilterPills instance on the page —
+   * needs :global() to reach across that component boundary).
+   */
+  [data-category='Education'] .tl-swatch,
+  :global([data-filter='Education'] .pill-dot) {
     background: var(--cat-education);
   }
-  [data-category='Research Experience'] .tl-swatch {
+  [data-category='Research Experience'] .tl-swatch,
+  :global([data-filter='Research Experience'] .pill-dot) {
     background: var(--cat-research);
   }
-  [data-category='Leadership Experience'] .tl-swatch {
+  [data-category='Leadership Experience'] .tl-swatch,
+  :global([data-filter='Leadership Experience'] .pill-dot) {
     background: var(--cat-leadership);
   }
-  [data-category='Honors & Awards'] .tl-swatch {
+  [data-category='Honors & Awards'] .tl-swatch,
+  :global([data-filter='Honors & Awards'] .pill-dot) {
     background: var(--cat-honors);
   }
-  [data-category='Publication'] .tl-swatch {
+  [data-category='Publication'] .tl-swatch,
+  :global([data-filter='Publication'] .pill-dot) {
     background: var(--cat-publication);
   }
-  [data-category='Doctoral Thesis'] .tl-swatch {
+  [data-category='Doctoral Thesis'] .tl-swatch,
+  :global([data-filter='Doctoral Thesis'] .pill-dot) {
     background: var(--cat-thesis);
   }
-  [data-category='Presentation'] .tl-swatch {
+  [data-category='Presentation'] .tl-swatch,
+  :global([data-filter='Presentation'] .pill-dot) {
     background: var(--cat-presentation);
   }
 

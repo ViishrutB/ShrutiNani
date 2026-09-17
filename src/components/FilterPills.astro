@@ -1,0 +1,124 @@
+---
+/**
+ * Filter pills wired to a list of items elsewhere on the page — "All" plus
+ * one per distinct value. No framework, just enough inline JS to toggle
+ * `hidden` on whichever items don't match. Progressive enhancement: with JS
+ * disabled, every item stays visible and the pills are inert, a reasonable
+ * "no filtering" fallback rather than a broken page.
+ *
+ * Domain-agnostic on purpose — the Timeline (filtering by category) and
+ * Publications (filtering by author position) both use this same component.
+ * Each item in the target list needs a `data-{itemAttribute}` attribute
+ * carrying its value; this component doesn't otherwise know what that value
+ * means. Dot colors, if any, are the consuming page's job too — see
+ * Timeline.astro's --cat-* tokens or publications.astro's --role-* tokens,
+ * each matched via `:global([data-filter='Value'] .pill-dot)`.
+ */
+interface Props {
+  /** id of the element containing the filterable items */
+  listId: string;
+  /** The item's `data-*` attribute name (without the `data-` prefix) that
+      carries its filter value, e.g. "category" for `data-category`. */
+  itemAttribute: string;
+  /** Distinct values to render one pill per, in display order. */
+  values: string[];
+  /** Accessible label for the filter button group. */
+  label: string;
+  /** Render a small color-swatch dot before each pill's label. */
+  withDots?: boolean;
+}
+
+const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
+---
+
+<div
+  class="mb-8 flex flex-wrap gap-2"
+  role="group"
+  aria-label={label}
+  data-filter-group
+  data-filter-list={listId}
+  data-filter-attr={itemAttribute}
+>
+  <button type="button" data-filter="All" aria-pressed="true" class="filter-pill">
+    All
+  </button>
+  {
+    values.map((value) => (
+      <button type="button" data-filter={value} aria-pressed="false" class="filter-pill">
+        {withDots && <span class="pill-dot" aria-hidden="true" />}
+        {value}
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    border: 1px solid var(--rule);
+    padding: 0.375rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    background: transparent;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+
+  .filter-pill:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .filter-pill[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Falls back to the general structural color when the consuming page
+     hasn't defined a specific one for this value. */
+  .pill-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--trace);
+  }
+</style>
+
+<script>
+  // Wires every filter group on the page independently: each reads its own
+  // target list (data-filter-list) and which data-* attribute on that list's
+  // items to match against (data-filter-attr), so the same markup/behavior
+  // serves the Timeline's category filter and the Publications role filter
+  // without either page's script knowing about the other's domain.
+  const groups = document.querySelectorAll<HTMLElement>('[data-filter-group]');
+
+  groups.forEach((group) => {
+    const listId = group.dataset.filterList;
+    const attr = group.dataset.filterAttr;
+    const list = listId ? document.getElementById(listId) : null;
+    if (!list || !attr) return;
+
+    const buttons = group.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = list.querySelectorAll<HTMLElement>(`[data-${attr}]`);
+
+    group.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+      if (!button) return;
+
+      const filter = button.dataset.filter;
+      items.forEach((item) => {
+        item.hidden = filter !== 'All' && (item.dataset as Record<string, string | undefined>)[attr] !== filter;
+      });
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+    });
+  });
+</script>

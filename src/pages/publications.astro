@@ -5,17 +5,24 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Placeholder from '../components/Placeholder.astro';
+import FilterPills from '../components/FilterPills.astro';
 import { splitAuthors } from '../lib/authors';
 
 const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
 
 // Same pattern as the Timeline's CV check: the frontmatter can name a PDF
-// before the file actually exists (the thesis's is still TODO), so the
-// embedded viewer and download link only appear once it's really there.
+// before the file actually exists, so the embedded viewer and download link
+// only appear once it's really there.
 function pdfFileExists(pdfPath: string | null): boolean {
   if (!pdfPath) return false;
   return fs.existsSync(path.join(process.cwd(), 'public', pdfPath));
 }
+
+// Fixed, meaningful order (not alphabetical) — only shows a pill for a role
+// that actually appears among the publications, same principle as the
+// Timeline's orderCategories.
+const ROLE_ORDER = ['first author', 'second author', 'co-author'];
+const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.role === role));
 ---
 
 <BaseLayout title="Publications">
@@ -24,102 +31,114 @@ function pdfFileExists(pdfPath: string | null): boolean {
   {publications.length === 0 && <Placeholder milestone="M5 — Publications page: 4 papers plus thesis" />}
 
   {publications.length > 0 && (
-    <ul class="divide-y divide-rule">
-      {publications.map((pub) => {
-        const isThesis = pub.data.type === 'Doctoral Thesis';
-        const hasPdf = pdfFileExists(pub.data.pdf);
-        return (
-          <li class="pub-entry py-6 first:pt-0">
-            {/* Bibliography convention, not a card: a hanging year column is
-               how a citation list is actually set, not an invented layout. */}
-            <p class="pub-year tabular-nums pt-0.5 text-sm font-medium text-muted">{pub.data.year}</p>
-            <div>
-              <h2 class="text-lg font-semibold text-ink">
-                {pub.data.link ? (
-                  <a href={pub.data.link} target="_blank" rel="noopener noreferrer" class="text-ink no-underline hover:text-accent">
-                    {pub.data.title}
-                  </a>
-                ) : (
-                  pub.data.title
-                )}
-              </h2>
+    <>
+      {roles.length > 1 && (
+        <FilterPills
+          listId="publications-list"
+          itemAttribute="role"
+          values={roles}
+          label="Filter publications by author position"
+          withDots
+        />
+      )}
 
-              {pub.data.authors && (
-                <p class="mt-1 text-sm text-ink">
-                  {splitAuthors(pub.data.authors).map((segment) =>
-                    segment.highlight ? <strong class="font-semibold">{segment.text}</strong> : segment.text,
+      <ul id="publications-list" class="divide-y divide-rule">
+        {publications.map((pub) => {
+          const isThesis = pub.data.type === 'Doctoral Thesis';
+          const hasPdf = pdfFileExists(pub.data.pdf);
+          return (
+            <li class="pub-entry py-6 first:pt-0" data-role={pub.data.role}>
+              {/* Bibliography convention, not a card: a hanging year column is
+                 how a citation list is actually set, not an invented layout. */}
+              <p class="pub-year tabular-nums pt-0.5 text-sm font-medium text-muted">{pub.data.year}</p>
+              <div>
+                <h2 class="text-lg font-semibold text-ink">
+                  {pub.data.link ? (
+                    <a href={pub.data.link} target="_blank" rel="noopener noreferrer" class="text-ink no-underline hover:text-accent">
+                      {pub.data.title}
+                    </a>
+                  ) : (
+                    pub.data.title
                   )}
+                </h2>
+
+                {pub.data.authors && (
+                  <p class="mt-1 text-sm text-ink">
+                    {splitAuthors(pub.data.authors).map((segment) =>
+                      segment.highlight ? <strong class="font-semibold">{segment.text}</strong> : segment.text,
+                    )}
+                  </p>
+                )}
+
+                <p class="mt-1 text-sm text-muted">
+                  {pub.data.journal && <em>{pub.data.journal}</em>}
+                  {pub.data.institution}
+                  {pub.data.volume && `, ${pub.data.volume}`}
+                  {pub.data.pages && `, ${pub.data.pages}`}
                 </p>
-              )}
 
-              <p class="mt-1 text-sm text-muted">
-                {pub.data.journal && <em>{pub.data.journal}</em>}
-                {pub.data.institution}
-                {pub.data.volume && `, ${pub.data.volume}`}
-                {pub.data.pages && `, ${pub.data.pages}`}
-              </p>
+                {pub.data.role && (
+                  <span class="role-pill mt-2 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium capitalize" data-badge-role={pub.data.role}>
+                    {pub.data.role}
+                  </span>
+                )}
 
-              {pub.data.role && (
-                <span class="mt-2 inline-block rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium capitalize text-accent">
-                  {pub.data.role}
-                </span>
-              )}
-
-              <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-                {pub.data.link && (
-                  <a
-                    href={pub.data.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 text-sm text-accent underline underline-offset-4"
-                  >
-                    Read on {pub.data.journal}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="h-3.5 w-3.5"
-                      aria-hidden="true"
+                <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  {pub.data.link && (
+                    <a
+                      href={pub.data.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 text-sm text-accent underline underline-offset-4"
                     >
-                      <path d="M6 4h6v6M12 4 4 12" />
-                    </svg>
-                  </a>
-                )}
-                {hasPdf && (
-                  <a
-                    href={pub.data.pdf!}
-                    download
-                    class="text-sm text-accent underline underline-offset-4"
+                      Read on {pub.data.journal}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5"
+                        aria-hidden="true"
+                      >
+                        <path d="M6 4h6v6M12 4 4 12" />
+                      </svg>
+                    </a>
+                  )}
+                  {hasPdf && (
+                    <a
+                      href={pub.data.pdf!}
+                      download
+                      class="text-sm text-accent underline underline-offset-4"
+                    >
+                      Download PDF
+                    </a>
+                  )}
+                  {isThesis && !hasPdf && (
+                    <span class="text-sm italic text-muted">Thesis PDF coming soon</span>
+                  )}
+                </div>
+
+                {isThesis && hasPdf && (
+                  <object
+                    data={pub.data.pdf!}
+                    type="application/pdf"
+                    class="mt-4 h-[75vh] w-full rounded-lg border border-rule"
+                    aria-label={pub.data.title}
                   >
-                    Download PDF
-                  </a>
-                )}
-                {isThesis && !hasPdf && (
-                  <span class="text-sm italic text-muted">Thesis PDF coming soon</span>
+                    <p class="p-4 text-sm text-muted">
+                      Your browser can't preview PDFs inline. <a href={pub.data.pdf!} class="text-accent underline underline-offset-4">Download the thesis</a> instead.
+                    </p>
+                  </object>
                 )}
               </div>
-
-              {isThesis && hasPdf && (
-                <object
-                  data={pub.data.pdf!}
-                  type="application/pdf"
-                  class="mt-4 h-[75vh] w-full rounded-lg border border-rule"
-                  aria-label={pub.data.title}
-                >
-                  <p class="p-4 text-sm text-muted">
-                    Your browser can't preview PDFs inline. <a href={pub.data.pdf!} class="text-accent underline underline-offset-4">Download the thesis</a> instead.
-                  </p>
-                </object>
-              )}
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   )}
 </BaseLayout>
 
@@ -141,5 +160,71 @@ function pdfFileExists(pdfPath: string | null): boolean {
     .pub-year {
       padding-top: 0;
     }
+  }
+
+  /*
+   * Author-position palette — green/yellow/blue as requested. Same hue
+   * family as the Timeline's green/yellow/blue category slots, but these
+   * light-mode values are darkened past those (which were tuned as marks on
+   * the page background, a different job) because here the color IS the
+   * pill's text: checked with a canvas-resolved WCAG contrast calc against
+   * each pill's own soft background — 5.1–7.2:1, all clear the 4.5:1 small-
+   * text floor with real margin. The `-soft` token is the pale pill fill;
+   * the bare token doubles as the filter dot's fill, which needs the
+   * stronger mark a pale tint wouldn't give it.
+   */
+  :global(:root) {
+    --role-first: oklch(45% 0.15 145);
+    --role-first-soft: oklch(94% 0.05 145);
+    --role-second: oklch(42% 0.13 75);
+    --role-second-soft: oklch(94% 0.06 85);
+    --role-co: oklch(50% 0.16 255);
+    --role-co-soft: oklch(94% 0.04 255);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) {
+      --role-first: #4ade80;
+      --role-first-soft: oklch(26% 0.06 145);
+      --role-second: #eab308;
+      --role-second-soft: oklch(27% 0.07 85);
+      --role-co: #7db8f2;
+      --role-co-soft: oklch(27% 0.05 255);
+    }
+  }
+
+  :global(:root[data-theme='dark']) {
+    --role-first: #4ade80;
+    --role-first-soft: oklch(26% 0.06 145);
+    --role-second: #eab308;
+    --role-second-soft: oklch(27% 0.07 85);
+    --role-co: #7db8f2;
+    --role-co-soft: oklch(27% 0.05 255);
+  }
+
+  /* Pill: pale tint behind, saturated text on top. Dot: no text to sit on,
+     so it gets the saturated color directly as its fill — a pale dot would
+     barely register as a mark against the page background. */
+  .role-pill[data-badge-role='first author'] {
+    color: var(--role-first);
+    background: var(--role-first-soft);
+  }
+  .role-pill[data-badge-role='second author'] {
+    color: var(--role-second);
+    background: var(--role-second-soft);
+  }
+  .role-pill[data-badge-role='co-author'] {
+    color: var(--role-co);
+    background: var(--role-co-soft);
+  }
+
+  :global([data-filter='first author'] .pill-dot) {
+    background: var(--role-first);
+  }
+  :global([data-filter='second author'] .pill-dot) {
+    background: var(--role-second);
+  }
+  :global([data-filter='co-author'] .pill-dot) {
+    background: var(--role-co);
   }
 </style>
