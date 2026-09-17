@@ -6,7 +6,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Placeholder from '../components/Placeholder.astro';
 import Timeline from '../components/Timeline.astro';
-import type { TimelineItem } from '../lib/timeline';
+import TimelineFilters from '../components/TimelineFilters.astro';
+import { orderCategories, type TimelineItem } from '../lib/timeline';
 import { formatDateRange, sortKey, toSortableMonth } from '../lib/dates';
 
 // The CV PDF is dropped into public/documents/ directly (not through a
@@ -70,6 +71,7 @@ const items: (TimelineItem & { _sort: number; _sortTiebreak: number })[] = [
 ].sort((a, b) => b._sort - a._sort || b._sortTiebreak - a._sortTiebreak);
 
 const hasContent = items.length > 0 || cvPdfExists;
+const categories = orderCategories(items);
 
 const skillsEntries = await getCollection('skills');
 const skillsEntry = skillsEntries[0];
@@ -108,6 +110,8 @@ const { Content: SkillsContent } = skillsEntry ? await render(skillsEntry) : { C
   </PageHeader>
 
   {!hasContent && <Placeholder milestone="M2 — Timeline page: CV rendered as a chronological timeline" />}
+
+  {items.length > 1 && <TimelineFilters categories={categories} />}
 
   {items.length > 0 && <Timeline items={items} />}
 

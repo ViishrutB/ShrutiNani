@@ -23,3 +23,30 @@ export interface TimelineItem {
   /** Self-hosted PDF (thesis, a poster) — never a journal's own PDF. */
   pdf?: string | null;
 }
+
+/**
+ * Preferred left-to-right order for the timeline's filter pills — roughly the
+ * order a CV's own sections run in. Not an enum: categories are free-form
+ * (see content.config.ts), so anything not listed here — a new resume
+ * category, "Talk"/"Poster" once presentation type is confirmed — just falls
+ * in afterward, in first-appearance order, rather than being dropped.
+ */
+const CATEGORY_ORDER = [
+  'Education',
+  'Research Experience',
+  'Leadership Experience',
+  'Honors & Awards',
+  'Publication',
+  'Doctoral Thesis',
+  'Presentation',
+  'Talk',
+  'Poster',
+];
+
+/** Distinct categories present in `items`, in CATEGORY_ORDER (then first-seen). */
+export function orderCategories(items: { category: string }[]): string[] {
+  const present = new Set(items.map((item) => item.category));
+  const ordered = CATEGORY_ORDER.filter((category) => present.has(category));
+  const remaining = [...present].filter((category) => !ordered.includes(category));
+  return [...ordered, ...remaining];
+}
