@@ -298,6 +298,19 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
   .pdf-modal[open] {
     display: flex;
     flex-direction: column;
+    /*
+     * A modal <dialog> centers itself natively — the browser's own UA rule
+     * gives it `position: fixed; inset: 0` plus `margin: auto`, and that
+     * combination is what centers a box with a definite width/height inside
+     * the viewport. Tailwind's Preflight resets margin to 0 on every
+     * element site-wide (the usual "remove browser default margins" reset),
+     * which zeroes out the one property that trick depends on — the dialog
+     * was still landing at inset 0 on every side, just pinned to the
+     * top-left instead of centered. Restoring it here rather than carving
+     * an exception into Preflight: this is the one element on the site that
+     * actually needs it.
+     */
+    margin: auto;
   }
 
   .pdf-modal {
