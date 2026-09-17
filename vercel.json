@@ -1,6 +1,0 @@
-{
-  "redirects": [
-    { "source": "/bio", "destination": "/purpose", "permanent": true },
-    { "source": "/resume", "destination": "/timeline", "permanent": true }
-  ]
-}

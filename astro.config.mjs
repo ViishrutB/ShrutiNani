@@ -13,11 +13,4 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  // The pages themselves live at src/pages/purpose.astro and timeline.astro —
-  // these just carry anyone who bookmarked or linked the original /bio and
-  // /resume URLs (used briefly right after launch) forward to the new ones.
-  redirects: {
-    '/bio': '/purpose',
-    '/resume': '/timeline',
-  },
 });
