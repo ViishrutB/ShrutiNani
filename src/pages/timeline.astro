@@ -79,10 +79,7 @@ const { Content: SkillsContent } = skillsEntry ? await render(skillsEntry) : { C
 ---
 
 <BaseLayout title="Timeline">
-  <PageHeader
-    title="Timeline"
-    lede="A chronological record of education, research, and clinical experience, drawn directly from the CV."
-  >
+  <PageHeader title="Timeline">
     {cvPdfExists && (
       <a
         slot="action"

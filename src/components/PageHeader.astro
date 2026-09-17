@@ -1,16 +1,18 @@
 ---
+/**
+ * Just the title and an optional header-row action (the Timeline page's
+ * "Download as PDF" button). No subheading/lede — every page here is named
+ * plainly enough that a page-description sentence under the title was
+ * telling the reader something the title and the content already had.
+ */
 interface Props {
   title: string;
-  lede?: string;
 }
 
-const { title, lede } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <div class="mb-10 flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
-  <div class="min-w-0 flex-1">
-    <h1 class="text-3xl sm:text-4xl">{title}</h1>
-    {lede && <p class="mt-3 max-w-prose text-lg text-muted">{lede}</p>}
-  </div>
+  <h1 class="min-w-0 flex-1 text-3xl sm:text-4xl">{title}</h1>
   <slot name="action" />
 </div>

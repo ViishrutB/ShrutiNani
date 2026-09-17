@@ -19,10 +19,7 @@ function pdfFileExists(pdfPath: string | null): boolean {
 ---
 
 <BaseLayout title="Publications">
-  <PageHeader
-    title="Publications"
-    lede="Peer-reviewed papers and doctoral thesis, most recent first."
-  />
+  <PageHeader title="Publications" />
 
   {publications.length === 0 && <Placeholder milestone="M5 — Publications page: 4 papers plus thesis" />}
 
