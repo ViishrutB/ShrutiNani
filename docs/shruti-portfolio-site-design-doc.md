@@ -180,13 +180,45 @@ Each milestone is a natural handoff point for Claude Code — small enough to re
 
 ---
 
-## 9. What's needed from Shruti/Vishrut before/during build
+## 9. Outstanding content — single source of truth
 
-- A one-line identity/tagline for the Home page (e.g. "MD-PhD candidate · Neurology · Physician-Scientist")
-- PDF or high-res image for each conference poster (5 total, per CV)
-- The thesis PDF file (for direct hosting)
-- DOI links for the 4 peer-reviewed papers (Science 2021, Neuroscience Letters 2021, Movement Disorders 2024, J Neuroscience 2026)
-- Any accounts to link (Google Scholar, ORCID, LinkedIn, GitHub)
-- Headshots, event photos, quotes, and testimonials — no need to gather these all upfront; they're modeled to drop in incrementally as Vishrut supplies them (see §5)
+This is the live checklist for what's still missing; tick items as they land. (Originally a
+pre-build wishlist — now the running tracker. Nothing here blocks the site working: every
+page renders sensibly whether its content exists yet or not, per ground rule 5 in
+`SKILL.md`.)
 
-None of the above blocks starting the build — the site scaffolds and deploys with placeholder content first, per the milestones in §8.
+**Blocking real pages:**
+
+- [x] Statement of Purpose text — transcribed verbatim from the source PDF, rendered as the
+      Purpose page body (M3)
+- [ ] The 10 finalized ERAS experience entries (→ Experiences, M4)
+- [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
+      the Timeline page, with a "Download as PDF" button (M2)
+- [x] Citation details for the 4 papers, page built and live at `/publications` — each links
+      out to its journal/DOI, her name bolded in the byline (M5)
+- [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified
+      two ways (title/volume/pages match, and the DOI itself resolves via doi.org to that
+      exact publisher page) before Vishrut reviewed and confirmed all 4
+- [x] Doctoral thesis PDF — hosted at `/documents/nanivadekar-thesis-2025.pdf`, opens in a
+      popup viewer from the Publications page
+- [x] The 5 conference presentations from the CV — entered under
+      `src/content/presentations/` (M6's content; the page template is still M6)
+- [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but not
+      the format; each entry's `type` is `null # TODO` rather than guessed
+
+**Non-blocking — pages render fine without these:**
+
+- [ ] Confirmed one-line tagline for Home (current string in `src/site.config.ts` is this
+      doc's own *example*, not signed off)
+- [ ] Current headshot
+- [ ] A verse for the Home page's Sanskrit shloka/translation — a decision for Shruti/Vishrut,
+      not one to guess at; see `src/content/quote/` once it exists
+- [ ] Poster PDFs or high-res images (5 total)
+- [x] LinkedIn and email — both live in the footer as icon links
+- [ ] Google Scholar and ORCID profile links
+- [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
+- [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
+      doesn't cover it — apex domain works fine as the canonical URL in the meantime)
+
+**Known open questions** (from `SKILL.md`): the confirmed institution and dates for the
+neurology sub-internship experience, and the content for the "Neurology AI" experience.

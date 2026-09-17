@@ -1,10 +1,13 @@
 # SKILL.md — Build & Operating Guide for shrutinani.com
 
 This file is what Claude Code should read first in every session on this repo. It's the
-*how* — the *why* lives in [`shruti-portfolio-site-design-doc.md`](./shruti-portfolio-site-design-doc.md)
-at the repo root (read that too, at least once, before making structural changes). Vishrut
-drives this repo from PyCharm with Claude Code; Shruti edits content directly on GitHub. Keep
-both workflows in mind.
+*how* — the *why* lives in [`shruti-portfolio-site-design-doc.md`](./shruti-portfolio-site-design-doc.md),
+its sibling in this `docs/` folder (read that too, at least once, before making structural
+changes). Both live here rather than at the repo root deliberately — they're working
+documents for whoever is building the site, not what a visitor to the repo should see first;
+[`README.md`](../README.md) at the root is that front door. Vishrut drives this repo from
+PyCharm with Claude Code; Shruti edits content directly on GitHub. Keep both workflows in
+mind.
 
 ## Engineering philosophy
 
@@ -121,10 +124,10 @@ the start — none of it is done yet:
 6. **M9 (stretch): Update ergonomics.** Once live and Shruti's added a piece of content
    herself, revisit whether the README's "adding content" guide held up in practice.
 
-Track outstanding content gaps (CV PDF, thesis PDF, real DOIs, posters, headshot, etc.) in the
-README as they're identified — that checklist is the single source of truth for what's still
-needed, so don't duplicate it here. Don't invent content to fill a gap; flag that a task is
-blocked on missing material instead.
+Track outstanding content gaps (CV PDF, thesis PDF, real DOIs, posters, headshot, etc.) in
+`shruti-portfolio-site-design-doc.md` §9 as they're identified — that checklist is the single
+source of truth for what's still needed, so don't duplicate it here or in the README. Don't
+invent content to fill a gap; flag that a task is blocked on missing material instead.
 
 ## Visual design
 
@@ -146,7 +149,7 @@ again is a decision for Vishrut, same as this one was.
 - The confirmed institution and dates for Experience #8 (the neurology sub-internship) —
   there's a note in that file explaining why "Emory"/"MD-SEE" is deliberately not used there
 - Content for Experience #4 ("Neurology AI") — currently a placeholder
-- Anything in the README's outstanding-content checklist
+- Anything in `shruti-portfolio-site-design-doc.md` §9's outstanding-content checklist
 - Any change to the tech stack, hosting, or domain decisions recorded in
   `shruti-portfolio-site-design-doc.md` §1 and §7
 - Any tradeoff where the "clever" and the "simple" answers diverge and the right call isn't
