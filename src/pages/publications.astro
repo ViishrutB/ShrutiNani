@@ -20,8 +20,11 @@ function pdfFileExists(pdfPath: string | null): boolean {
 
 // Fixed, meaningful order (not alphabetical) — only shows a pill for a role
 // that actually appears among the publications, same principle as the
-// Timeline's orderCategories.
-const ROLE_ORDER = ['first author', 'second author', 'co-author'];
+// Timeline's orderCategories. A doctoral thesis has exactly one author by
+// definition, so "sole author" is its own value — not folded into "first
+// author," which would misreport a co-authored paper's byline as identical
+// to an unco-authored thesis.
+const ROLE_ORDER = ['sole author', 'first author', 'second author', 'co-author'];
 const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.role === role));
 ---
 
@@ -108,30 +111,63 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
                     </a>
                   )}
                   {hasPdf && (
-                    <a
-                      href={pub.data.pdf!}
-                      download
-                      class="text-sm text-accent underline underline-offset-4"
-                    >
-                      Download PDF
-                    </a>
+                    <>
+                      <button
+                        type="button"
+                        data-open-modal={`pdf-modal-${pub.id}`}
+                        class="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-1.5 text-sm font-medium text-paper transition-opacity hover:opacity-90"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                        >
+                          <path d="M1.5 10S4.5 4 10 4s8.5 6 8.5 6-3 6-8.5 6-8.5-6-8.5-6Z" />
+                          <circle cx="10" cy="10" r="2.25" />
+                        </svg>
+                        {isThesis ? 'View Thesis' : 'View PDF'}
+                      </button>
+                      <a href={pub.data.pdf!} download class="text-sm text-accent underline underline-offset-4">
+                        Download PDF
+                      </a>
+                    </>
                   )}
                   {isThesis && !hasPdf && (
                     <span class="text-sm italic text-muted">Thesis PDF coming soon</span>
                   )}
                 </div>
 
-                {isThesis && hasPdf && (
-                  <object
-                    data={pub.data.pdf!}
-                    type="application/pdf"
-                    class="mt-4 h-[75vh] w-full rounded-lg border border-rule"
-                    aria-label={pub.data.title}
-                  >
-                    <p class="p-4 text-sm text-muted">
-                      Your browser can't preview PDFs inline. <a href={pub.data.pdf!} class="text-accent underline underline-offset-4">Download the thesis</a> instead.
-                    </p>
-                  </object>
+                {hasPdf && (
+                  <dialog id={`pdf-modal-${pub.id}`} class="pdf-modal" aria-label={pub.data.title}>
+                    <div class="pdf-modal-bar">
+                      <p class="pdf-modal-title">{pub.data.title}</p>
+                      <button type="button" data-close-modal aria-label="Close">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.75"
+                          stroke-linecap="round"
+                          class="h-4 w-4"
+                          aria-hidden="true"
+                        >
+                          <path d="M5 5l10 10M15 5 5 15" />
+                        </svg>
+                      </button>
+                    </div>
+                    <object data={pub.data.pdf!} type="application/pdf" class="pdf-modal-frame" aria-label={pub.data.title}>
+                      <p class="p-4 text-sm text-muted">
+                        Your browser can't preview PDFs inline. <a href={pub.data.pdf!} class="text-accent underline underline-offset-4">Download the thesis</a> instead.
+                      </p>
+                    </object>
+                  </dialog>
                 )}
               </div>
             </li>
@@ -174,6 +210,8 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
    * stronger mark a pale tint wouldn't give it.
    */
   :global(:root) {
+    --role-sole: oklch(45% 0.17 300);
+    --role-sole-soft: oklch(94% 0.05 300);
     --role-first: oklch(45% 0.15 145);
     --role-first-soft: oklch(94% 0.05 145);
     --role-second: oklch(42% 0.13 75);
@@ -184,6 +222,8 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
 
   @media (prefers-color-scheme: dark) {
     :global(:root:not([data-theme='light'])) {
+      --role-sole: #c98bf0;
+      --role-sole-soft: oklch(27% 0.06 300);
       --role-first: #4ade80;
       --role-first-soft: oklch(26% 0.06 145);
       --role-second: #eab308;
@@ -194,6 +234,8 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
   }
 
   :global(:root[data-theme='dark']) {
+    --role-sole: #c98bf0;
+    --role-sole-soft: oklch(27% 0.06 300);
     --role-first: #4ade80;
     --role-first-soft: oklch(26% 0.06 145);
     --role-second: #eab308;
@@ -205,6 +247,10 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
   /* Pill: pale tint behind, saturated text on top. Dot: no text to sit on,
      so it gets the saturated color directly as its fill — a pale dot would
      barely register as a mark against the page background. */
+  .role-pill[data-badge-role='sole author'] {
+    color: var(--role-sole);
+    background: var(--role-sole-soft);
+  }
   .role-pill[data-badge-role='first author'] {
     color: var(--role-first);
     background: var(--role-first-soft);
@@ -218,6 +264,9 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
     background: var(--role-co-soft);
   }
 
+  :global([data-filter='sole author'] .pill-dot) {
+    background: var(--role-sole);
+  }
   :global([data-filter='first author'] .pill-dot) {
     background: var(--role-first);
   }
@@ -227,4 +276,103 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
   :global([data-filter='co-author'] .pill-dot) {
     background: var(--role-co);
   }
+
+  /*
+   * Native <dialog> instead of a hand-rolled overlay: free focus-trapping,
+   * Escape-to-close, and top-layer stacking. Flex-column layout so the PDF
+   * frame fills whatever space the title bar doesn't, rather than a fixed
+   * height fighting the bar's actual rendered size.
+   */
+  .pdf-modal {
+    display: flex;
+    flex-direction: column;
+    width: min(920px, 92vw);
+    height: min(88vh, 1000px);
+    padding: 0;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .pdf-modal::backdrop {
+    background: rgba(15, 15, 20, 0.55);
+    backdrop-filter: blur(2px);
+  }
+
+  .pdf-modal-bar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pdf-modal-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pdf-modal-bar button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+  }
+
+  .pdf-modal-bar button:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .pdf-modal-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+  }
+
+  @media (max-width: 560px) {
+    .pdf-modal {
+      width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+  }
 </style>
+
+<script>
+  // Native <dialog> gives Escape-to-close and modal focus-trapping for free —
+  // this just wires the trigger button, the explicit close button, and a
+  // click on the backdrop (a click lands on the <dialog> element itself only
+  // when it's outside the actual content box, which is exactly "the user
+  // clicked outside").
+  document.querySelectorAll<HTMLButtonElement>('[data-open-modal]').forEach((button) => {
+    const dialog = document.getElementById(button.dataset.openModal!);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    button.addEventListener('click', () => dialog.showModal());
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('dialog.pdf-modal').forEach((dialog) => {
+    dialog.querySelector('[data-close-modal]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>
