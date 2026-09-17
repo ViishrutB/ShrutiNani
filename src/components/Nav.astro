@@ -1,5 +1,6 @@
 ---
 import { navLinks, site } from '../site.config';
+import ThemeToggle from './ThemeToggle.astro';
 
 const { pathname } = Astro.url;
 // Normalize so `/bio` and `/bio/` highlight the same link.
@@ -12,28 +13,31 @@ const current = pathname.replace(/\/+$/, '') || '/';
       {site.name}
     </a>
 
-    <nav aria-label="Main">
-      <ul class="-mx-2 flex flex-wrap items-baseline gap-x-1 gap-y-1 text-sm">
-        {
-          navLinks.map(({ label, href }) => {
-            const isCurrent = current === href.replace(/\/+$/, '') || (href === '/' && current === '/');
-            return (
-              <li>
-                <a
-                  href={href}
-                  aria-current={isCurrent ? 'page' : undefined}
-                  class:list={[
-                    'rounded px-2 py-1 no-underline transition-colors',
-                    isCurrent ? 'font-medium text-ink' : 'text-muted hover:text-ink',
-                  ]}
-                >
-                  {label}
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
+    <div class="flex flex-wrap items-center gap-3">
+      <nav aria-label="Main">
+        <ul class="-mx-2 flex flex-wrap items-baseline gap-x-1 gap-y-1 text-sm">
+          {
+            navLinks.map(({ label, href }) => {
+              const isCurrent = current === href.replace(/\/+$/, '') || (href === '/' && current === '/');
+              return (
+                <li>
+                  <a
+                    href={href}
+                    aria-current={isCurrent ? 'page' : undefined}
+                    class:list={[
+                      'rounded px-2 py-1 no-underline transition-colors',
+                      isCurrent ? 'font-medium text-ink' : 'text-muted hover:text-ink',
+                    ]}
+                  >
+                    {label}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+      <ThemeToggle />
+    </div>
   </div>
 </header>

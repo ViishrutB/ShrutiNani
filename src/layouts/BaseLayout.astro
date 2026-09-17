@@ -20,6 +20,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Applies a saved theme choice before anything paints. Deliberately a
+      classic blocking inline script, not a processed/deferred one (Astro
+      would otherwise bundle and defer it as a module) — deferred would run
+      after first paint and defeat the point: a flash of the wrong theme on
+      every load for anyone who's picked one. See ThemeToggle.astro for the
+      part that sets localStorage in the first place.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.dataset.theme = stored;
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="canonical" href={canonical} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
