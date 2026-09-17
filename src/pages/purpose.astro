@@ -22,7 +22,13 @@ const testimonials = (await getCollection('testimonials')).filter((t) => t.data.
   {!bioEntry && <Placeholder milestone="M3 — Purpose page: statement of purpose" />}
 
   {Content && (
-    <div class="prose-content max-w-prose text-justify hyphens-auto">
+    // Deliberately narrower than the site's usual max-w-prose (65ch): that
+    // value renders close to the width of the outer content column at this
+    // page's font size, so it wasn't actually the binding constraint — lines
+    // were running ~95+ characters. Justified text wants a narrower column
+    // than ragged-right does (that's why newspapers set it in columns, not
+    // full-width) or the word-spacing stretches get visibly uneven.
+    <div class="prose-content max-w-[58ch] text-justify hyphens-auto">
       <Content />
     </div>
   )}

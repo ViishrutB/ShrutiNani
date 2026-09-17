@@ -13,31 +13,41 @@ const current = pathname.replace(/\/+$/, '') || '/';
       {site.name}
     </a>
 
-    <div class="flex flex-wrap items-center gap-3">
-      <nav aria-label="Main">
-        <ul class="-mx-2 flex flex-wrap items-baseline gap-x-1 gap-y-1 text-sm">
-          {
-            navLinks.map(({ label, href }) => {
-              const isCurrent = current === href.replace(/\/+$/, '') || (href === '/' && current === '/');
-              return (
-                <li>
-                  <a
-                    href={href}
-                    aria-current={isCurrent ? 'page' : undefined}
-                    class:list={[
-                      'rounded px-2 py-1 no-underline transition-colors',
-                      isCurrent ? 'font-medium text-ink' : 'text-muted hover:text-ink',
-                    ]}
-                  >
-                    {label}
-                  </a>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </nav>
-      <ThemeToggle />
-    </div>
+    <nav aria-label="Main">
+      <ul class="-mx-2 flex flex-wrap items-center gap-x-1 gap-y-2 text-sm">
+        {
+          navLinks.map(({ label, href }) => {
+            const isCurrent = current === href.replace(/\/+$/, '') || (href === '/' && current === '/');
+            return (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  class:list={[
+                    'rounded px-2 py-1 no-underline transition-colors',
+                    isCurrent ? 'font-medium text-ink' : 'text-muted hover:text-ink',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })
+        }
+        {
+          /*
+           * Lives inside the same flex-wrap list as the links, not in a
+           * separate wrapping row alongside it — that was landing the toggle
+           * alone on its own line with a visible gap above it whenever the
+           * links wrapped first, around 400-500px. As the list's own last
+           * item, it wraps together with whichever links end up on the last
+           * line instead.
+           */
+        }
+        <li class="ml-1">
+          <ThemeToggle />
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
