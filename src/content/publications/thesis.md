@@ -3,5 +3,5 @@ title: "Characterizing network-specific pathophysiology to guide targeted therap
 type: "Doctoral Thesis"
 institution: "Carnegie Mellon University"
 year: 2025
-pdf: null # TODO: thesis PDF file needed for self-hosting — see design doc §7
+pdf: "/documents/nanivadekar-thesis-2025.pdf"
 ---
