@@ -174,6 +174,30 @@ const bio = defineCollection({
   }),
 });
 
+/**
+ * The Home page's pull-quote — a Sanskrit shloka, in Devanagari, with its
+ * translation. One-entry singleton, same pattern as `bio`. Deliberately not
+ * folded into `testimonials`: a testimonial is someone else's words about
+ * Shruti; this is a verse *she* identifies with, which needs its own source
+ * attribution (a text/chapter/verse, not a person's name and role) — a
+ * different shape, not a stricter version of the same one.
+ *
+ * `devanagari` is required; `transliteration` (IAST/roman) is optional since
+ * the script itself is the primary presentation and a transliteration is a
+ * reading aid, not a substitute.
+ */
+const quote = defineCollection({
+  loader: markdownIn('quote'),
+  schema: z.object({
+    devanagari: z.string(),
+    transliteration: z.string().optional(),
+    translation: z.string(),
+    // e.g. "Bhagavad Gita 2.47" — never guessed; leave unset rather than
+    // attribute a verse to the wrong source.
+    source: z.string().optional(),
+  }),
+});
+
 export const collections = {
   experiences,
   publications,
@@ -181,5 +205,6 @@ export const collections = {
   testimonials,
   resume,
   bio,
+  quote,
   skills,
 };

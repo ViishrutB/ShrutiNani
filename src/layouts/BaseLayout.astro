@@ -44,12 +44,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
       data). Never actually loaded before this — "Source Serif 4" was a
       font-family fallback stack with no @font-face or <link> behind it, so
       every visitor was silently seeing their browser's default serif.
+
+      Tiro Devanagari Sanskrit covers the Home page's shloka — a face
+      designed for classical Sanskrit specifically (correct conjunct-
+      consonant forms), not a generic/modern Hindi-oriented Devanagari face
+      pressed into a job it wasn't drawn for.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Tiro+Devanagari+Sanskrit&display=swap"
     />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

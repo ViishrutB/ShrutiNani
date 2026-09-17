@@ -76,6 +76,9 @@
   --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
   --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     Helvetica, Arial, sans-serif;
+  /* Home page's shloka only — a real Devanagari fallback stack, not the
+     Latin serif/sans above, which have no Devanagari glyphs at all. */
+  --font-devanagari: 'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', 'Siddhanta', serif;
 }
 
 @layer base {
