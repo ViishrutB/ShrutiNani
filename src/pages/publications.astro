@@ -60,7 +60,9 @@ function pdfFileExists(pdfPath: string | null): boolean {
               </p>
 
               {pub.data.role && (
-                <p class="mt-1 text-sm capitalize text-trace">{pub.data.role}</p>
+                <span class="mt-2 inline-block rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium capitalize text-accent">
+                  {pub.data.role}
+                </span>
               )}
 
               <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">

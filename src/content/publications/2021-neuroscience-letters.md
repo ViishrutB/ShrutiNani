@@ -7,5 +7,5 @@ volume: "741"
 pages: "135486"
 doi: "10.1016/j.neulet.2020.135486"
 link: "https://doi.org/10.1016/j.neulet.2020.135486"
-role: "co-author"
+role: "second author"
 ---
