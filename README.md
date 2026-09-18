@@ -15,7 +15,7 @@ Live at **[shrutinani.com](https://shrutinani.com)**.
 | `/timeline` | The CV as one chronological timeline — education, research, leadership, honors, publications, and presentations merged from their own content collections. Color-coded by category with a legend/filter bar; a "Download as PDF" button for the CV itself |
 | `/publications` | The peer-reviewed papers and doctoral thesis as an actual bibliography (hanging year column, not cards), each linking to its journal/DOI. Author-position pills (Sole/First/Second/Co-Author) with a matching filter; the thesis opens in a popup viewer instead of an inline embed |
 | `/experiences` | The 10 ERAS experiences, most recent end date first, with a color-coded type pill per entry and a filter bar (Research/Clinical/Leadership/Teaching) matching the Timeline and Publications pattern; the 3 ERAS flags as "most meaningful" get a badge and their separate reflection text |
-| `/presentations` | Not yet built (M6) — conference talks and posters |
+| `/presentations` | Not yet built (M6) — conference talks and posters. The route still works, but its nav link is commented out in `src/site.config.ts` while Vishrut shares the site for review, so there's no dead-end tab visible |
 
 Every page renders sensibly with zero content — a scaffolded page shows a plain "not built
 yet" note rather than a blank or broken one, so nothing here has to be finished before it's
@@ -77,7 +77,7 @@ src/
   styles/global.css     Design tokens (light + dark palette, type scale)
 public/
   documents/            Self-hosted PDFs (CV, thesis, posters)
-  images/               Headshots and photos
+  images/               Headshot; images/life/ is the Home page photo carousel
 ```
 
 **Content and layout stay separate.** A new paper, poster, or timeline entry is a new
@@ -130,7 +130,8 @@ blocks the site working — every page renders sensibly whether its content exis
 - [x] Doctoral thesis PDF — hosted at `/documents/nanivadekar-thesis-2025.pdf`, opens in a
       popup viewer from the Publications page
 - [x] The 5 conference presentations from the CV — entered under
-      `src/content/presentations/` (the dedicated Presentations page isn't built yet)
+      `src/content/presentations/` (the dedicated Presentations page isn't built yet, so its
+      nav link is hidden for now rather than pointing at a placeholder)
 - [x] Poster vs. talk for each of the 5 presentations — confirmed from the ERAS application's
       Scholarly Work section (Oral vs. Poster Presentation headings), cross-checked against
       title/venue/year already on file for each
