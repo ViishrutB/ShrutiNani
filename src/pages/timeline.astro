@@ -121,11 +121,51 @@ const { Content: SkillsContent } = skillsEntry ? await render(skillsEntry) : { C
   {items.length > 0 && <Timeline items={items} />}
 
   {skillsEntry && SkillsContent && (
-    <section class="mt-14 border-t border-rule pt-10">
-      <h2 class="text-xl">{skillsEntry.data.title}</h2>
+    <details class="skills-details mt-14 border-t border-rule pt-6">
+      {
+        /*
+         * Collapsed by default, native <details> rather than the timeline's
+         * chronological flow: Technical Strengths isn't dated, so it doesn't
+         * belong interleaved with (or reading as part of) a chronological
+         * list. A disclosure keeps it reachable from this page — it's still
+         * CV content — without visually implying it has a date or order.
+         */
+      }
+      <summary class="flex cursor-pointer list-none items-center gap-2 text-xl">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="skills-chevron h-4 w-4 shrink-0 text-muted"
+          aria-hidden="true"
+        >
+          <path d="m6 8 4 4 4-4" />
+        </svg>
+        {skillsEntry.data.title}
+      </summary>
       <div class="prose-content mt-6 max-w-prose">
         <SkillsContent />
       </div>
-    </section>
+    </details>
   )}
 </BaseLayout>
+
+<style>
+  /* Chrome/Safari render a default disclosure triangle on <summary> in
+     addition to list-style, unless explicitly suppressed. */
+  .skills-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .skills-chevron {
+    transition: transform 0.15s;
+  }
+
+  .skills-details[open] .skills-chevron {
+    transform: rotate(180deg);
+  }
+</style>
