@@ -32,6 +32,7 @@ export const profileLinks: ReadonlyArray<{ label: string; href: string | null }>
   { label: 'Google Scholar', href: null }, // TODO(vishrut): profile URL
   { label: 'ORCID', href: null }, // TODO(vishrut): ORCID iD
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shruti-nanivadekar-ba9788ab/' },
+  { label: 'X', href: 'https://x.com/shruti1294' },
   { label: 'Email', href: 'mailto:shruti.1294@gmail.com' },
 ];
 
