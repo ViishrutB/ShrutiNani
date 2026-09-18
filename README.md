@@ -14,7 +14,7 @@ Live at **[shrutinani.com](https://shrutinani.com)**.
 | `/purpose` | The Statement of Purpose, set as justified reading-width prose with a drop cap; a testimonials section that stays invisible until quotes exist |
 | `/timeline` | The CV as one chronological timeline — education, research, leadership, honors, publications, and presentations merged from their own content collections. Color-coded by category with a legend/filter bar; a "Download as PDF" button for the CV itself |
 | `/publications` | The peer-reviewed papers and doctoral thesis as an actual bibliography (hanging year column, not cards), each linking to its journal/DOI. Author-position pills (Sole/First/Second/Co-Author) with a matching filter; the thesis opens in a popup viewer instead of an inline embed |
-| `/experiences` | Not yet built (M4) — the 10 ERAS experiences, expanded past the 750-character limit |
+| `/experiences` | The 10 ERAS experiences, grouped by theme (Research/Clinical/Leadership/Teaching) with a color-coded heading per group; the 3 ERAS flags as "most meaningful" get a badge and their separate reflection text |
 | `/presentations` | Not yet built (M6) — conference talks and posters |
 
 Every page renders sensibly with zero content — a scaffolded page shows a plain "not built
@@ -65,7 +65,7 @@ src/
     resume/             Education, research, leadership, and honors entries
     publications/       4 peer-reviewed papers + the doctoral thesis
     presentations/      Conference talks and posters
-    experiences/        The 10 ERAS experiences (not yet populated)
+    experiences/        The 10 ERAS experiences
     testimonials/       Quotes and letter excerpts; safe to leave empty
     bio/                The Statement of Purpose
     quote/              The Home page's Sanskrit shloka
@@ -116,9 +116,9 @@ blocks the site working — every page renders sensibly whether its content exis
 
 **Blocking real pages:**
 
-- [x] Statement of Purpose text — transcribed verbatim from the source PDF, rendered as the
-      Purpose page body
-- [ ] The 10 finalized ERAS experience entries (→ Experiences page, not yet built)
+- [x] Statement of Purpose text — transcribed verbatim from the final SOP PDF, rendered as
+      the Purpose page body
+- [x] The 10 finalized ERAS experience entries — live at `/experiences`, grouped by theme
 - [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
       the Timeline page, with a "Download as PDF" button
 - [x] Citation details for the 4 papers, page built and live at `/publications` — each links
@@ -130,14 +130,15 @@ blocks the site working — every page renders sensibly whether its content exis
       popup viewer from the Publications page
 - [x] The 5 conference presentations from the CV — entered under
       `src/content/presentations/` (the dedicated Presentations page isn't built yet)
-- [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but not
-      the format; each entry's `type` is `null # TODO` rather than guessed
+- [x] Poster vs. talk for each of the 5 presentations — confirmed from the ERAS application's
+      Scholarly Work section (Oral vs. Poster Presentation headings), cross-checked against
+      title/venue/year already on file for each
 
 **Non-blocking — pages render fine without these:**
 
 - [ ] Confirmed one-line tagline for Home (current string in `src/site.config.ts` is an
       example, not signed off)
-- [ ] Current headshot
+- [x] Current headshot — live on the Home page (`public/images/headshot.jpg`)
 - [x] Home page shloka — Bhagavad Gita 2.47 (the same verse in her thesis), Devanagari +
       transliteration + translation, live in `src/content/quote/`
 - [ ] Poster PDFs or high-res images (5 total)
@@ -146,6 +147,3 @@ blocks the site working — every page renders sensibly whether its content exis
 - [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
 - [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
       doesn't cover it — apex domain works fine as the canonical URL in the meantime)
-
-**Known open questions:** the confirmed institution and dates for the neurology
-sub-internship experience, and the content for the "Neurology AI" experience.
