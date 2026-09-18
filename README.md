@@ -22,9 +22,9 @@ yet" note rather than a blank or broken one, so nothing here has to be finished 
 safe to deploy.
 
 Site-wide: a light/dark theme toggle (remembers your choice, otherwise follows your OS),
-responsive down to phone width, and a design system ("Signal & Circuit" — see
-`docs/shruti-portfolio-site-design-doc.md`) grounded in Shruti's actual research rather than
-a generic academic template.
+responsive down to phone width, and a design system ("Signal & Circuit") grounded in
+Shruti's actual research — a deep brain stimulation motif, a categorical color palette
+checked for colorblind-safe contrast — rather than a generic academic template.
 
 ## Tech stack
 
@@ -36,8 +36,10 @@ a generic academic template.
   `src/content.config.ts`; a malformed entry fails the build instead of shipping broken
 - **[Vercel](https://vercel.com)** — hosting, connected to this repo's GitHub integration
 
-See `docs/shruti-portfolio-site-design-doc.md` §4 for the fuller reasoning behind each
-choice.
+Chosen for a low-traffic, content-driven personal site: Astro's island architecture ships
+zero JS by default, content collections give Shruti a no-code editing story without a
+headless CMS's extra moving parts, and Vercel's GitHub integration makes every content
+commit self-deploying.
 
 ## Running it
 
@@ -61,12 +63,13 @@ src/
   site.config.ts       Name, tagline, nav, profile links (the only non-markdown content)
   content/
     resume/             Education, research, leadership, and honors entries
-    publications/        4 peer-reviewed papers + the doctoral thesis
-    presentations/        Conference talks and posters
-    experiences/         The 10 ERAS experiences (not yet populated)
-    testimonials/        Quotes and letter excerpts; safe to leave empty
-    bio/                 The Statement of Purpose
-    skills/               Technical strengths
+    publications/       4 peer-reviewed papers + the doctoral thesis
+    presentations/      Conference talks and posters
+    experiences/        The 10 ERAS experiences (not yet populated)
+    testimonials/       Quotes and letter excerpts; safe to leave empty
+    bio/                The Statement of Purpose
+    quote/              The Home page's Sanskrit shloka
+    skills/              Technical strengths
   layouts/              BaseLayout — <head>, nav, footer, skip link
   components/           Shared pieces (Timeline, FilterPills, ThemeToggle, …)
   lib/                  Small pure-function helpers (date formatting, sort order, …)
@@ -75,11 +78,6 @@ src/
 public/
   documents/            Self-hosted PDFs (CV, thesis, posters)
   images/               Headshots and photos
-docs/
-  SKILL.md                              Engineering philosophy and ground rules for anyone
-                                         (human or Claude Code) doing structural work here
-  shruti-portfolio-site-design-doc.md   Goals, personas, tech-stack rationale, milestone
-                                         tracking, and the live outstanding-content checklist
 ```
 
 **Content and layout stay separate.** A new paper, poster, or timeline entry is a new
@@ -111,14 +109,43 @@ needs to run anything locally.
 `npm run build` outputs a plain static site to `dist/`, so any static host works if the
 choice of Vercel ever changes.
 
-## More on this project
+## Outstanding content needed
 
-- **[`docs/shruti-portfolio-site-design-doc.md`](./docs/shruti-portfolio-site-design-doc.md)**
-  — the *why*: goals, personas, the site map, full tech-stack rationale, the milestone table,
-  and the running "what content is still needed" checklist.
-- **[`docs/SKILL.md`](./docs/SKILL.md)** — the *how*: engineering philosophy and ground rules
-  for anyone doing structural work on this repo. Read it before a layout or architecture
-  change.
+This is the live checklist for what's still missing; tick items as they land. Nothing here
+blocks the site working — every page renders sensibly whether its content exists yet or not.
 
-Both live in `docs/` rather than at the repo root on purpose — they're working documents for
-whoever is building the site, not what a visitor to the repo should see first.
+**Blocking real pages:**
+
+- [x] Statement of Purpose text — transcribed verbatim from the source PDF, rendered as the
+      Purpose page body
+- [ ] The 10 finalized ERAS experience entries (→ Experiences page, not yet built)
+- [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
+      the Timeline page, with a "Download as PDF" button
+- [x] Citation details for the 4 papers, page built and live at `/publications` — each links
+      out to its journal/DOI, her name bolded in the byline
+- [x] DOI links for the 4 papers — not listed on the CV, so each was looked up and verified
+      two ways (title/volume/pages match, and the DOI itself resolves via doi.org to that
+      exact publisher page) before Vishrut reviewed and confirmed all 4
+- [x] Doctoral thesis PDF — hosted at `/documents/nanivadekar-thesis-2025.pdf`, opens in a
+      popup viewer from the Publications page
+- [x] The 5 conference presentations from the CV — entered under
+      `src/content/presentations/` (the dedicated Presentations page isn't built yet)
+- [ ] Poster vs. talk for each of the 5 presentations — the CV lists title/venue/year but not
+      the format; each entry's `type` is `null # TODO` rather than guessed
+
+**Non-blocking — pages render fine without these:**
+
+- [ ] Confirmed one-line tagline for Home (current string in `src/site.config.ts` is an
+      example, not signed off)
+- [ ] Current headshot
+- [x] Home page shloka — Bhagavad Gita 2.47 (the same verse in her thesis), Devanagari +
+      transliteration + translation, live in `src/content/quote/`
+- [ ] Poster PDFs or high-res images (5 total)
+- [x] LinkedIn and email — both live in the footer as icon links
+- [ ] Google Scholar and ORCID profile links
+- [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
+- [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
+      doesn't cover it — apex domain works fine as the canonical URL in the meantime)
+
+**Known open questions:** the confirmed institution and dates for the neurology
+sub-internship experience, and the content for the "Neurology AI" experience.

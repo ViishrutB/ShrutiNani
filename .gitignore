@@ -19,3 +19,8 @@ pnpm-debug.log*
 .idea/
 .vscode/
 .DS_Store
+
+# Internal build docs — SKILL.md (engineering philosophy) and the design doc
+# (project-specific goals/status). Kept locally for Claude Code and whoever's
+# building the site to read; deliberately not published to GitHub.
+docs/
