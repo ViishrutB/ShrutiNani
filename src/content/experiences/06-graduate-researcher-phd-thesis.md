@@ -1,8 +1,9 @@
 ---
-title: "Graduate Student Researcher — Basic Science Project"
+title: "Graduate Student Researcher — PhD Thesis Research"
 org: "Gittis Lab, Carnegie Mellon University"
 location: "Pittsburgh, PA"
-dates: "July 2020 – June 2025"
+startDate: "2020-07"
+endDate: "2025-06"
 type: "Research"
 highlights:
   - "Investigated the neural mechanisms underlying tremor and bradykinesia across two distinct models of Parkinson's disease (PD) — a dopamine depletion model demonstrating bradykinesia and an alpha-synuclein model demonstrating tremor."

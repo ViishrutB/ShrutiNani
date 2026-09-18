@@ -2,7 +2,8 @@
 title: "Graduate Student Researcher — Translational Project"
 org: "Gittis Lab, Carnegie Mellon University"
 location: "Pittsburgh, PA"
-dates: "July 2020 – June 2025"
+startDate: "2020-07"
+endDate: "2025-06"
 type: "Research"
 mostMeaningful: true
 highlights:

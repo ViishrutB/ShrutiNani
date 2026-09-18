@@ -2,7 +2,8 @@
 title: "MD Summer Experience at Emory"
 org: "Department of Neurology, Emory School of Medicine"
 location: "Atlanta, GA"
-dates: "May 2016 – June 2016"
+startDate: "2016-05"
+endDate: "2016-06"
 type: "Clinical"
 highlights:
   - "Rotated between the consults team, the in-patient team and the neurology clinics at Grady Memorial Hospital to observe patients with various neurological disorders."

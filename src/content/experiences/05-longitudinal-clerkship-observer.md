@@ -2,7 +2,8 @@
 title: "Longitudinal Clinical Clerkship Observer"
 org: "Department of Neurological Surgery, University of Pittsburgh"
 location: "Pittsburgh, PA"
-dates: "September 2022 – November 2022"
+startDate: "2022-09"
+endDate: "2022-11"
 type: "Clinical"
 highlights:
   - "Observed ~24 cases involving functional neurosurgery for patients with epilepsy undergoing surface EEG placement or resection and movement disorders undergoing deep brain stimulation (DBS) implantation."

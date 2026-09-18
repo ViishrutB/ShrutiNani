@@ -2,7 +2,8 @@
 title: "Graduate Student Researcher — Mentoring"
 org: "Gittis Lab, Carnegie Mellon University"
 location: "Pittsburgh, PA"
-dates: "June 2023 – June 2025"
+startDate: "2023-06"
+endDate: "2025-06"
 type: "Teaching"
 highlights:
   - "Mentored an undergraduate researcher in the Gittis Lab, from technical skill acquisition to independent experimental design."

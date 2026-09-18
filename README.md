@@ -14,7 +14,7 @@ Live at **[shrutinani.com](https://shrutinani.com)**.
 | `/purpose` | The Statement of Purpose, set as justified reading-width prose with a drop cap; a testimonials section that stays invisible until quotes exist |
 | `/timeline` | The CV as one chronological timeline — education, research, leadership, honors, publications, and presentations merged from their own content collections. Color-coded by category with a legend/filter bar; a "Download as PDF" button for the CV itself |
 | `/publications` | The peer-reviewed papers and doctoral thesis as an actual bibliography (hanging year column, not cards), each linking to its journal/DOI. Author-position pills (Sole/First/Second/Co-Author) with a matching filter; the thesis opens in a popup viewer instead of an inline embed |
-| `/experiences` | The 10 ERAS experiences, grouped by theme (Research/Clinical/Leadership/Teaching) with a color-coded heading per group; the 3 ERAS flags as "most meaningful" get a badge and their separate reflection text |
+| `/experiences` | The 10 ERAS experiences, most recent end date first, with a color-coded type pill per entry and a filter bar (Research/Clinical/Leadership/Teaching) matching the Timeline and Publications pattern; the 3 ERAS flags as "most meaningful" get a badge and their separate reflection text |
 | `/presentations` | Not yet built (M6) — conference talks and posters |
 
 Every page renders sensibly with zero content — a scaffolded page shows a plain "not built
@@ -118,7 +118,8 @@ blocks the site working — every page renders sensibly whether its content exis
 
 - [x] Statement of Purpose text — transcribed verbatim from the final SOP PDF, rendered as
       the Purpose page body
-- [x] The 10 finalized ERAS experience entries — live at `/experiences`, grouped by theme
+- [x] The 10 finalized ERAS experience entries — live at `/experiences`, sorted by end date
+      with a type filter bar
 - [x] `CV_SN.pdf` — hosted at `/documents/CV_SN.pdf`, mirrored as a chronological timeline on
       the Timeline page, with a "Download as PDF" button
 - [x] Citation details for the 4 papers, page built and live at `/publications` — each links

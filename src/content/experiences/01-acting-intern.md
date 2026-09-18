@@ -2,7 +2,8 @@
 title: "Acting Intern"
 org: "Neurology Inpatient Wards, University of Pittsburgh School of Medicine"
 location: "Pittsburgh, PA"
-dates: "August 2026 – September 2026"
+startDate: "2026-08"
+endDate: "2026-09"
 type: "Clinical"
 mostMeaningful: true
 highlights:

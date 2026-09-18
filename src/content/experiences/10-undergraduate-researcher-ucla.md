@@ -2,7 +2,8 @@
 title: "Undergraduate Student Researcher"
 org: "Staba Lab, University of California, Los Angeles"
 location: "Los Angeles, CA"
-dates: "July 2013 – June 2016"
+startDate: "2013-07"
+endDate: "2016-06"
 type: "Research"
 highlights:
   - "Developed a MATLAB-based machine learning classification algorithm to automate seizure detection from continuous in vivo EEG recordings in an animal model of post-traumatic epilepsy."

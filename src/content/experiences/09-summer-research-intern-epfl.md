@@ -2,7 +2,8 @@
 title: "Summer Research Intern"
 org: "Blanke Lab, École Polytechnique Fédérale de Lausanne"
 location: "Lausanne, Switzerland"
-dates: "July 2015 – August 2015"
+startDate: "2015-07"
+endDate: "2015-08"
 type: "Research"
 highlights:
   - "Developed a behavioral experiment in MATLAB to determine whether human subjects were inherently more confident about the self-assessment of their accuracy (metacognition) on visual versus auditory discrimination tasks."

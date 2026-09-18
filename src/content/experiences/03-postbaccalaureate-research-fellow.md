@@ -2,7 +2,8 @@
 title: "Postbaccalaureate Research Fellow"
 org: "Hallett Lab, National Institutes of Health"
 location: "Bethesda, MD"
-dates: "September 2016 – August 2018"
+startDate: "2016-09"
+endDate: "2018-08"
 type: "Research"
 mostMeaningful: true
 highlights:

@@ -30,7 +30,11 @@ const markdownIn = (folder: string) =>
  * excludes ERAS sections that aren't part of the 10 Experiences (Impactful
  * Experience, Geographic Preferences) — those contain disclosures that are
  * appropriate for a residency application but not a public site.
- * File order drives display order, so name files `01-...`, `02-...`.
+ *
+ * Display order on /experiences is computed (descending by end date, same
+ * sortKey/formatDateRange helpers as the resume collection — see
+ * src/lib/dates.ts) rather than driven by filename, so file names are just a
+ * human-browsing convenience, not something the page reads.
  */
 const experiences = defineCollection({
   loader: markdownIn('experiences'),
@@ -38,10 +42,16 @@ const experiences = defineCollection({
     title: z.string(),
     org: z.string(),
     location: z.string().optional(),
-    // Free text rather than real dates: these are displayed verbatim
-    // ("June 2020 – June 2025") and never sorted or compared on.
-    dates: z.string(),
-    // Drives the grouping on /experiences.
+    // Same "YYYY" or "YYYY-MM" shape as resume's start/end dates, and the
+    // same reason: sortable, with month precision when it's known.
+    startDate: z.string().regex(/^\d{4}(-\d{2})?$/, 'use YYYY or YYYY-MM'),
+    endDate: z
+      .string()
+      .regex(/^\d{4}(-\d{2})?$/, 'use YYYY or YYYY-MM')
+      .nullable()
+      .default(null),
+    ongoing: z.boolean().default(false),
+    // Drives the filter pills on /experiences.
     type: z.enum(['Research', 'Clinical', 'Leadership', 'Teaching', 'Service']),
     // ERAS lets an applicant flag up to three experiences as most meaningful.
     mostMeaningful: z.boolean().default(false),

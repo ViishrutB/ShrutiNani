@@ -2,7 +2,8 @@
 title: "MSTP Student Leader"
 org: "Medical Scientist Training Program, University of Pittsburgh School of Medicine"
 location: "Pittsburgh, PA"
-dates: "June 2020 – June 2023"
+startDate: "2020-06"
+endDate: "2023-06"
 type: "Leadership"
 highlights:
   - "Served as Student Committee Chair representing ~110 MD-PhD trainees, liaising directly with program leadership to advocate for trainee needs and guide program policy."
