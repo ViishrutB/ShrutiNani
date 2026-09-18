@@ -211,8 +211,8 @@ page renders sensibly whether its content exists yet or not, per ground rule 5 i
 - [ ] Confirmed one-line tagline for Home (current string in `src/site.config.ts` is this
       doc's own *example*, not signed off)
 - [ ] Current headshot
-- [ ] A verse for the Home page's Sanskrit shloka/translation — a decision for Shruti/Vishrut,
-      not one to guess at; see `src/content/quote/` once it exists
+- [x] Home page shloka — Bhagavad Gita 2.47 (the same verse in her thesis), Devanagari +
+      transliteration + translation, live in `src/content/quote/`
 - [ ] Poster PDFs or high-res images (5 total)
 - [x] LinkedIn and email — both live in the footer as icon links
 - [ ] Google Scholar and ORCID profile links
