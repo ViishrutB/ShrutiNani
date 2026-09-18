@@ -41,5 +41,9 @@ export const navLinks = [
   { label: 'Timeline', href: '/timeline' },
   { label: 'Experiences', href: '/experiences' },
   { label: 'Publications', href: '/publications' },
-  { label: 'Presentations', href: '/presentations' },
+  // Presentations: hidden from nav while /presentations is still the M6
+  // placeholder — Vishrut is sharing the site for review and doesn't want
+  // a dead-end tab. The presentations content collection itself is real
+  // (5 entries, poster/talk confirmed); only the page template isn't built.
+  // Re-add `{ label: 'Presentations', href: '/presentations' }` once it is.
 ] as const;
