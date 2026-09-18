@@ -126,33 +126,43 @@ const { items } = Astro.props;
    * component — an ordinary scoped selector) with the matching filter
    * pill's dot (rendered by the separate FilterPills instance on the page —
    * needs :global() to reach across that component boundary).
+   *
+   * `.pill-dot.pill-dot` (the class repeated) isn't a typo: FilterPills.astro
+   * has its own scoped default (`.pill-dot { background: var(--trace) }`,
+   * astro-cid-qualified) sitting at the exact same specificity — one class
+   * either way — as a bare `[data-filter='X'] .pill-dot`. Which one won
+   * depended on which component's stylesheet Astro happened to bundle
+   * second, not on anything in this file, so it was silently coin-flippable
+   * across rebuilds. Doubling the class is the standard zero-cost way to
+   * outrank a tied selector deterministically, rather than hoping build
+   * output ordering keeps cooperating.
    */
   [data-category='Education'] .tl-swatch,
-  :global([data-filter='Education'] .pill-dot) {
+  :global([data-filter='Education'] .pill-dot.pill-dot) {
     background: var(--cat-education);
   }
   [data-category='Research Experience'] .tl-swatch,
-  :global([data-filter='Research Experience'] .pill-dot) {
+  :global([data-filter='Research Experience'] .pill-dot.pill-dot) {
     background: var(--cat-research);
   }
   [data-category='Leadership Experience'] .tl-swatch,
-  :global([data-filter='Leadership Experience'] .pill-dot) {
+  :global([data-filter='Leadership Experience'] .pill-dot.pill-dot) {
     background: var(--cat-leadership);
   }
   [data-category='Honors & Awards'] .tl-swatch,
-  :global([data-filter='Honors & Awards'] .pill-dot) {
+  :global([data-filter='Honors & Awards'] .pill-dot.pill-dot) {
     background: var(--cat-honors);
   }
   [data-category='Publication'] .tl-swatch,
-  :global([data-filter='Publication'] .pill-dot) {
+  :global([data-filter='Publication'] .pill-dot.pill-dot) {
     background: var(--cat-publication);
   }
   [data-category='Doctoral Thesis'] .tl-swatch,
-  :global([data-filter='Doctoral Thesis'] .pill-dot) {
+  :global([data-filter='Doctoral Thesis'] .pill-dot.pill-dot) {
     background: var(--cat-thesis);
   }
   [data-category='Presentation'] .tl-swatch,
-  :global([data-filter='Presentation'] .pill-dot) {
+  :global([data-filter='Presentation'] .pill-dot.pill-dot) {
     background: var(--cat-presentation);
   }
 

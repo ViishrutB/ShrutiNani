@@ -264,16 +264,24 @@ const roles = ROLE_ORDER.filter((role) => publications.some((pub) => pub.data.ro
     background: var(--role-co-soft);
   }
 
-  :global([data-filter='sole author'] .pill-dot) {
+  /*
+   * `.pill-dot.pill-dot` (the class repeated), not a typo — see the same
+   * comment on Timeline.astro's category-color rules for why: it's an
+   * identical latent bug (FilterPills.astro's own default dot color sits at
+   * the same tied specificity as a bare `[data-filter='X'] .pill-dot`,
+   * decided by build-bundling order rather than anything in this file) that
+   * hadn't been reported here yet but would eventually surface the same way.
+   */
+  :global([data-filter='sole author'] .pill-dot.pill-dot) {
     background: var(--role-sole);
   }
-  :global([data-filter='first author'] .pill-dot) {
+  :global([data-filter='first author'] .pill-dot.pill-dot) {
     background: var(--role-first);
   }
-  :global([data-filter='second author'] .pill-dot) {
+  :global([data-filter='second author'] .pill-dot.pill-dot) {
     background: var(--role-second);
   }
-  :global([data-filter='co-author'] .pill-dot) {
+  :global([data-filter='co-author'] .pill-dot.pill-dot) {
     background: var(--role-co);
   }
 
