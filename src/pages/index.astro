@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Placeholder from '../components/Placeholder.astro';
 import { site } from '../site.config';
 
 // One-entry collection, same pattern as `bio` — renders nothing at all,
@@ -10,6 +9,60 @@ import { site } from '../site.config';
 // comment on the `quote` collection).
 const quoteEntries = await getCollection('quote');
 const quoteEntry = quoteEntries[0];
+
+// Replaces the old "M2 — highlight stats" placeholder: real photos Vishrut
+// dropped in, in the order they actually happened. Not a content
+// collection — this is a one-off Home page section, not a schema other
+// pages need (see the testimonials/quote collections for that pattern).
+// Alt text sticks to what's visibly true; a caption asserting a specific
+// venue or date only appears where it's independently confirmed elsewhere
+// on the site (the Emory and Lake Conference entries match `experiences`
+// and `presentations` records; the lab photos and white coat photo don't
+// have a confirmed venue/date, so their alt text stays purely descriptive).
+const LIFE_PHOTOS = [
+  {
+    src: '/images/life/poster-emory-mdsee.jpg',
+    width: 480,
+    height: 640,
+    alt: "Shruti presenting a patient case poster during her MD Summer Experience at Emory, 2016",
+  },
+  {
+    src: '/images/life/white-coat.jpg',
+    width: 480,
+    height: 640,
+    alt: 'Shruti in her white coat, outside a university building',
+  },
+  {
+    src: '/images/life/lab-bench-selfie.jpg',
+    width: 853,
+    height: 640,
+    alt: 'Shruti in the lab beside a surgical microscope rig',
+  },
+  {
+    src: '/images/life/lab-group.jpg',
+    width: 853,
+    height: 640,
+    alt: 'Shruti with colleagues in white coats and scrubs in a lab',
+  },
+  {
+    src: '/images/life/lab-meeting.jpg',
+    width: 961,
+    height: 640,
+    alt: 'Shruti at a lab meeting, a slide on burst deep brain stimulation behind her',
+  },
+  {
+    src: '/images/life/poster-lake-conference.jpg',
+    width: 480,
+    height: 640,
+    alt: "Shruti presenting her poster at the Lake Conference on Sensation and Action, Thun, Switzerland, May 2023",
+  },
+  {
+    src: '/images/life/phd-defense.jpg',
+    width: 853,
+    height: 640,
+    alt: 'Shruti presenting her PhD dissertation defense, June 2025',
+  },
+];
 ---
 
 <BaseLayout>
@@ -87,5 +140,72 @@ const quoteEntry = quoteEntries[0];
     </blockquote>
   )}
 
-  <Placeholder milestone="M2 — Home page: highlight stats" />
+  <section class="border-t border-rule pt-8" aria-label="Photos from training and research">
+    <ul id="life-carousel" class="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1">
+      {LIFE_PHOTOS.map((photo) => (
+        <li class="shrink-0 snap-start">
+          <img
+            src={photo.src}
+            width={photo.width}
+            height={photo.height}
+            alt={photo.alt}
+            class="h-56 w-auto rounded-md border border-rule object-cover sm:h-64"
+            loading="lazy"
+          />
+        </li>
+      ))}
+    </ul>
+    <div class="mt-3 flex justify-end gap-2">
+      <button type="button" data-carousel-scroll="-1" aria-label="Scroll photos left" class="carousel-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+          <path d="M12 4 6 10l6 6" />
+        </svg>
+      </button>
+      <button type="button" data-carousel-scroll="1" aria-label="Scroll photos right" class="carousel-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+          <path d="m8 4 6 6-6 6" />
+        </svg>
+      </button>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  #life-carousel {
+    scroll-padding-inline: 1px;
+    scrollbar-width: thin;
+  }
+
+  .carousel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    border: 1px solid var(--rule);
+    color: var(--ink-muted);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .carousel-btn:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+</style>
+
+<script>
+  // Native scroll-snap does the actual carousel work with zero JS; this
+  // just gives mouse/trackpad users an explicit control, same role as a
+  // scrollbar. Degrades to plain horizontal scrolling with JS disabled.
+  const track = document.getElementById('life-carousel');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-carousel-scroll]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const direction = Number(button.dataset.carouselScroll);
+      track?.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: 'smooth' });
+    });
+  });
+</script>

@@ -10,7 +10,7 @@ Live at **[shrutinani.com](https://shrutinani.com)**.
 
 | Route | What's there |
 |---|---|
-| `/` | Name, one-line identity, a headshot slot, and a stylized deep brain stimulation trace — grounded in Shruti's own research subject, not generic decoration |
+| `/` | Name, one-line identity, headshot, a stylized deep brain stimulation trace, the shloka pull-quote, and a photo carousel spanning MD-SEE at Emory through her PhD defense — the trace is grounded in Shruti's own research subject, not generic decoration |
 | `/purpose` | The Statement of Purpose, set as justified reading-width prose with a drop cap; a testimonials section that stays invisible until quotes exist |
 | `/timeline` | The CV as one chronological timeline — education, research, leadership, honors, publications, and presentations merged from their own content collections. Color-coded by category with a legend/filter bar; a "Download as PDF" button for the CV itself |
 | `/publications` | The peer-reviewed papers and doctoral thesis as an actual bibliography (hanging year column, not cards), each linking to its journal/DOI. Author-position pills (Sole/First/Second/Co-Author) with a matching filter; the thesis opens in a popup viewer instead of an inline embed |
@@ -145,6 +145,8 @@ blocks the site working — every page renders sensibly whether its content exis
 - [ ] Poster PDFs or high-res images (5 total)
 - [x] LinkedIn and email — both live in the footer as icon links
 - [ ] Google Scholar and ORCID profile links
-- [ ] Photos, pull-quotes, and testimonial excerpts — these arrive incrementally
+- [x] Photos — the Home page carousel (`public/images/life/`), Emory MD-SEE (2016) through the PhD
+      dissertation defense (June 2025)
+- [ ] Testimonial excerpts — these arrive incrementally
 - [ ] `www.shrutinani.com` added as a domain in Vercel (currently resolves but the SSL cert
       doesn't cover it — apex domain works fine as the canonical URL in the meantime)
