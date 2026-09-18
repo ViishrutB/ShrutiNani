@@ -18,6 +18,7 @@ const experiences = (await getCollection('experiences')).sort((a, b) => {
 // principle as Publications' ROLE_ORDER.
 const TYPE_ORDER = ['Research', 'Clinical', 'Leadership', 'Teaching', 'Service'] as const;
 const types = TYPE_ORDER.filter((type) => experiences.some((entry) => entry.data.type === type));
+const hasMostMeaningful = experiences.some((entry) => entry.data.mostMeaningful);
 ---
 
 <BaseLayout title="Experiences">
@@ -34,12 +35,13 @@ const types = TYPE_ORDER.filter((type) => experiences.some((entry) => entry.data
           values={types}
           label="Filter experiences by theme"
           withDots
+          extra={hasMostMeaningful ? { attribute: 'mostMeaningful', label: 'Most meaningful' } : undefined}
         />
       )}
 
       <ul id="experiences-list" class="space-y-8">
         {experiences.map((entry) => (
-          <li data-type={entry.data.type}>
+          <li data-type={entry.data.type} data-most-meaningful={entry.data.mostMeaningful ? 'true' : 'false'}>
             <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <h2 class="text-lg font-semibold text-ink">{entry.data.title}</h2>
               <p class="tabular-nums text-sm font-medium text-muted">{formatDateRange(entry.data)}</p>

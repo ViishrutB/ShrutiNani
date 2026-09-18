@@ -6,8 +6,9 @@
  * disabled, every item stays visible and the pills are inert, a reasonable
  * "no filtering" fallback rather than a broken page.
  *
- * Domain-agnostic on purpose — the Timeline (filtering by category) and
- * Publications (filtering by author position) both use this same component.
+ * Domain-agnostic on purpose — the Timeline (filtering by category),
+ * Publications (filtering by author position), and Experiences (filtering
+ * by type, plus the `extra` flag below) all use this same component.
  * Each item in the target list needs a `data-{itemAttribute}` attribute
  * carrying its value; this component doesn't otherwise know what that value
  * means. Dot colors, if any, are the consuming page's job too — see
@@ -26,9 +27,17 @@ interface Props {
   label: string;
   /** Render a small color-swatch dot before each pill's label. */
   withDots?: boolean;
+  /**
+   * One extra pill, mutually exclusive with the others, for a boolean flag
+   * that isn't a value of `itemAttribute` — e.g. "Most meaningful" alongside
+   * a type filter on Experiences. Matches items where
+   * `data-{attribute}="true"` (attribute given in dataset/camelCase form,
+   * e.g. "mostMeaningful" for a `data-most-meaningful` item attribute).
+   */
+  extra?: { attribute: string; label: string };
 }
 
-const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
+const { listId, itemAttribute, values, label, withDots = false, extra } = Astro.props;
 ---
 
 <div
@@ -38,6 +47,7 @@ const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
   data-filter-group
   data-filter-list={listId}
   data-filter-attr={itemAttribute}
+  data-filter-extra-attr={extra?.attribute}
 >
   <button type="button" data-filter="All" aria-pressed="true" class="filter-pill">
     All
@@ -50,6 +60,11 @@ const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
       </button>
     ))
   }
+  {extra && (
+    <button type="button" data-filter="__extra__" aria-pressed="false" class="filter-pill">
+      {extra.label}
+    </button>
+  )}
 </div>
 
 <style>
@@ -104,6 +119,7 @@ const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
   groups.forEach((group) => {
     const listId = group.dataset.filterList;
     const attr = group.dataset.filterAttr;
+    const extraAttr = group.dataset.filterExtraAttr;
     const list = listId ? document.getElementById(listId) : null;
     if (!list || !attr) return;
 
@@ -115,8 +131,12 @@ const { listId, itemAttribute, values, label, withDots = false } = Astro.props;
       if (!button) return;
 
       const filter = button.dataset.filter;
+      const dataset = (item: HTMLElement) => item.dataset as Record<string, string | undefined>;
       items.forEach((item) => {
-        item.hidden = filter !== 'All' && (item.dataset as Record<string, string | undefined>)[attr] !== filter;
+        item.hidden =
+          filter === '__extra__' && extraAttr
+            ? dataset(item)[extraAttr] !== 'true'
+            : filter !== 'All' && dataset(item)[attr] !== filter;
       });
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
     });
