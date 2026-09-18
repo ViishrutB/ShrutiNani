@@ -14,11 +14,13 @@ const quoteEntry = quoteEntries[0];
 
 <BaseLayout>
   <div class="mb-8 grid grid-cols-[96px_1fr] items-start gap-6 sm:grid-cols-[128px_1fr] sm:gap-7">
-    <div
-      class="flex aspect-square items-center justify-center rounded-md border border-rule bg-paper-raised px-2 text-center text-[0.7rem] text-muted"
-    >
-      headshot<br />pending
-    </div>
+    <img
+      src="/images/headshot.jpg"
+      alt={site.name}
+      width="128"
+      height="128"
+      class="aspect-square rounded-md border border-rule object-cover"
+    />
     <div>
       <h1 class="text-4xl sm:text-5xl">{site.name}</h1>
       <p class="mt-2 font-serif text-xl italic text-muted">{site.tagline.role}</p>
