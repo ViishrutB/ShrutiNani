@@ -4,4 +4,5 @@ authors: "Nanivadekar S, Gittis A"
 venue: "NANS Neural Interfaces"
 location: "Washington, DC"
 year: 2025
+type: "Talk"
 ---

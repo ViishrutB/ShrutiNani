@@ -4,4 +4,5 @@ authors: "Nanivadekar S, Spix T, Gittis A"
 venue: "Lake Conference Sensation and Action"
 location: "Thun, Switzerland"
 year: 2023
+type: "Poster"
 ---

@@ -4,4 +4,5 @@ authors: "Nanivadekar S, Spix T, Gittis A"
 venue: "Society for Neuroscience"
 location: "Virtual"
 year: 2021
+type: "Poster"
 ---

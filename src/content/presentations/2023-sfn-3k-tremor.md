@@ -4,4 +4,5 @@ authors: "Nanivadekar S, Gittis A"
 venue: "Society for Neuroscience"
 location: "Washington, DC"
 year: 2023
+type: "Poster"
 ---
