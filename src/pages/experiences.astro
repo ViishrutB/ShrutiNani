@@ -1,10 +1,154 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Placeholder from '../components/Placeholder.astro';
+
+const experiences = await getCollection('experiences');
+
+// Fixed, meaningful order — not alphabetical — matching the weight these
+// themes carry across the rest of the site (Timeline puts research ahead of
+// leadership too). Only a group that actually has entries gets a section.
+const TYPE_ORDER = ['Research', 'Clinical', 'Leadership', 'Teaching', 'Service'] as const;
+const groups = TYPE_ORDER.map((type) => ({
+  type,
+  entries: experiences.filter((entry) => entry.data.type === type),
+})).filter((group) => group.entries.length > 0);
 ---
 
 <BaseLayout title="Experiences">
   <PageHeader title="Experiences" />
-  <Placeholder milestone="M4 — Experiences page: all 10 entries, grouped by theme" />
+
+  {experiences.length === 0 && <Placeholder milestone="M4 — Experiences page: all 10 entries, grouped by theme" />}
+
+  {experiences.length > 0 && (
+    <div class="space-y-12">
+      {groups.map((group) => (
+        <section>
+          <h2 class="exp-heading mb-5 flex items-center gap-2.5 text-sm font-semibold uppercase tracking-wide text-muted" data-type={group.type}>
+            <span class="exp-heading-dot" aria-hidden="true" />
+            {group.type}
+          </h2>
+
+          <ul class="space-y-8">
+            {group.entries.map((entry) => (
+              <li>
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 class="text-lg font-semibold text-ink">{entry.data.title}</h3>
+                  <p class="tabular-nums text-sm font-medium text-muted">{entry.data.dates}</p>
+                </div>
+
+                <p class="mt-0.5 text-sm text-ink">
+                  {entry.data.org}
+                  {entry.data.location && <span class="text-muted"> — {entry.data.location}</span>}
+                </p>
+
+                {entry.data.mostMeaningful && (
+                  <span class="most-meaningful-badge mt-2 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium" data-badge-type={entry.data.type}>
+                    Most meaningful
+                  </span>
+                )}
+
+                <ul class="mt-3 space-y-1.5 text-sm text-ink">
+                  {entry.data.highlights.map((point) => (
+                    <li class="exp-bullet">{point}</li>
+                  ))}
+                </ul>
+
+                {entry.data.meaningfulReflection && (
+                  <blockquote class="reflection mt-4 border-l-2 pl-4 text-sm italic text-muted" data-badge-type={entry.data.type}>
+                    {entry.data.meaningfulReflection}
+                  </blockquote>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  )}
 </BaseLayout>
+
+<style>
+  .exp-bullet {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+
+  .exp-bullet::before {
+    content: '';
+    position: absolute;
+    left: 0.2rem;
+    top: 0.55rem;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+    background: var(--rule-strong, var(--rule));
+  }
+
+  /*
+   * Same four-hue categorical palette job as Timeline's --cat-* and
+   * Publications' --role-* tokens, sized for this page's four in-use types
+   * (Service is in the schema for a future entry but unused today, so it
+   * gets no token — same principle as Publications only defining pills for
+   * roles that actually appear). Validated with the dataviz skill's
+   * validate_palette.js: light and dark both pass lightness band, chroma
+   * floor, CVD separation (worst adjacent ΔE 17.7 dark / 21.0 light), and
+   * contrast vs. surface.
+   */
+  :global(:root) {
+    --type-research: #d9591f;
+    --type-research-soft: oklch(94% 0.05 40);
+    --type-clinical: #2a6fd6;
+    --type-clinical-soft: oklch(94% 0.04 250);
+    --type-leadership: #1a9e6f;
+    --type-leadership-soft: oklch(94% 0.05 155);
+    --type-teaching: #8a4fd1;
+    --type-teaching-soft: oklch(94% 0.05 300);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) {
+      --type-research: #e8712f;
+      --type-research-soft: oklch(27% 0.06 40);
+      --type-clinical: #4a90e2;
+      --type-clinical-soft: oklch(27% 0.05 250);
+      --type-leadership: #1fa876;
+      --type-leadership-soft: oklch(26% 0.06 155);
+      --type-teaching: #9c6fe0;
+      --type-teaching-soft: oklch(27% 0.06 300);
+    }
+  }
+
+  :global(:root[data-theme='dark']) {
+    --type-research: #e8712f;
+    --type-research-soft: oklch(27% 0.06 40);
+    --type-clinical: #4a90e2;
+    --type-clinical-soft: oklch(27% 0.05 250);
+    --type-leadership: #1fa876;
+    --type-leadership-soft: oklch(26% 0.06 155);
+    --type-teaching: #9c6fe0;
+    --type-teaching-soft: oklch(27% 0.06 300);
+  }
+
+  .exp-heading-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+  }
+
+  .exp-heading[data-type='Research'] .exp-heading-dot { background: var(--type-research); }
+  .exp-heading[data-type='Clinical'] .exp-heading-dot { background: var(--type-clinical); }
+  .exp-heading[data-type='Leadership'] .exp-heading-dot { background: var(--type-leadership); }
+  .exp-heading[data-type='Teaching'] .exp-heading-dot { background: var(--type-teaching); }
+
+  .most-meaningful-badge[data-badge-type='Research'] { color: var(--type-research); background: var(--type-research-soft); }
+  .most-meaningful-badge[data-badge-type='Clinical'] { color: var(--type-clinical); background: var(--type-clinical-soft); }
+  .most-meaningful-badge[data-badge-type='Leadership'] { color: var(--type-leadership); background: var(--type-leadership-soft); }
+  .most-meaningful-badge[data-badge-type='Teaching'] { color: var(--type-teaching); background: var(--type-teaching-soft); }
+
+  .reflection[data-badge-type='Research'] { border-color: var(--type-research); }
+  .reflection[data-badge-type='Clinical'] { border-color: var(--type-clinical); }
+  .reflection[data-badge-type='Leadership'] { border-color: var(--type-leadership); }
+  .reflection[data-badge-type='Teaching'] { border-color: var(--type-teaching); }
+</style>

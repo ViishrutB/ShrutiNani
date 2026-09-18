@@ -25,7 +25,11 @@ const markdownIn = (folder: string) =>
   glob({ base: `./src/content/${folder}`, pattern: '**/*.{md,mdx}' });
 
 /**
- * The 10 ERAS experiences, expanded past the 750-character ERAS limit.
+ * The 10 ERAS experiences, in the same shape ERAS itself uses them: a title,
+ * organization, dates, and a bullet list of responsibilities. Deliberately
+ * excludes ERAS sections that aren't part of the 10 Experiences (Impactful
+ * Experience, Geographic Preferences) — those contain disclosures that are
+ * appropriate for a residency application but not a public site.
  * File order drives display order, so name files `01-...`, `02-...`.
  */
 const experiences = defineCollection({
@@ -41,9 +45,14 @@ const experiences = defineCollection({
     type: z.enum(['Research', 'Clinical', 'Leadership', 'Teaching', 'Service']),
     // ERAS lets an applicant flag up to three experiences as most meaningful.
     mostMeaningful: z.boolean().default(false),
-    // The 750-character ERAS version. The markdown body below the frontmatter
-    // is the longer narrative that ERAS had no room for.
-    summary: z.string(),
+    // ERAS's own "Context, Roles & Responsibilities" bullets for this entry —
+    // kept as a list rather than a paragraph because that's the actual shape
+    // of the source data (see resume.highlights for the same convention).
+    highlights: z.array(z.string()),
+    // ERAS requires a separate reflection for each of the (up to three)
+    // entries flagged `mostMeaningful` — a distinct field in the source form,
+    // not a longer version of `highlights`, so only set on those entries.
+    meaningfulReflection: z.string().optional(),
   }),
 });
 
