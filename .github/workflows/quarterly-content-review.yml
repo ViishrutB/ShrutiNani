@@ -1,10 +1,12 @@
 name: Quarterly content review
 
-# Opens a checklist issue on the 1st of Jan/Apr/Jul/Oct so the site's content
-# gets a periodic once-over. Can also be run by hand from the Actions tab.
+# Opens a checklist issue on the last day of each quarter (Mar 31, Jun 30,
+# Sep 30, Dec 31), assigned to the repo owner, starting with Q4 2026. Can also
+# be run by hand from the Actions tab.
 on:
   schedule:
-    - cron: "0 14 1 1,4,7,10 *"
+    - cron: "0 14 31 3,12 *"
+    - cron: "0 14 30 6,9 *"
   workflow_dispatch:
 
 permissions:
@@ -18,17 +20,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          # Repo variable (Settings > Secrets and variables > Actions > Variables).
-          # GitHub username of the reviewer; must be a repo collaborator.
-          ASSIGNEE: ${{ vars.REVIEW_ASSIGNEE }}
+          ASSIGNEE: ${{ github.repository_owner }}
         run: |
+          # The Sep 30 2026 run would be Q3 2026; reviews start with Q4 2026.
+          if [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(date -u +%Y%m%d)" -lt 20261201 ]; then
+            echo "Before the Q4 2026 start; skipping."
+            exit 0
+          fi
+
           quarter="Q$(( ($(date -u +%-m) - 1) / 3 + 1 )) $(date -u +%Y)"
 
           gh label create content-review --color 5319e7 \
             --description "Periodic content review" 2>/dev/null || true
 
           cat > body.md <<'BODY'
-          Time for the quarterly look over shrutinani.com. Tick each item once it's
+          Time for the end-of-quarter look over shrutinani.com. Tick each item once it's
           current, or comment with what needs changing.
 
           - [ ] **Home** — headshot, tagline, photo carousel
