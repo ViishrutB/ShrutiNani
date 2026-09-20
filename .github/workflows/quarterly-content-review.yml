@@ -1,0 +1,49 @@
+name: Quarterly content review
+
+# Opens a checklist issue on the 1st of Jan/Apr/Jul/Oct so the site's content
+# gets a periodic once-over. Can also be run by hand from the Actions tab.
+on:
+  schedule:
+    - cron: "0 14 1 1,4,7,10 *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  open-review-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open the review issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          # Repo variable (Settings > Secrets and variables > Actions > Variables).
+          # GitHub username of the reviewer; must be a repo collaborator.
+          ASSIGNEE: ${{ vars.REVIEW_ASSIGNEE }}
+        run: |
+          quarter="Q$(( ($(date -u +%-m) - 1) / 3 + 1 )) $(date -u +%Y)"
+
+          gh label create content-review --color 5319e7 \
+            --description "Periodic content review" 2>/dev/null || true
+
+          cat > body.md <<'BODY'
+          Time for the quarterly look over shrutinani.com. Tick each item once it's
+          current, or comment with what needs changing.
+
+          - [ ] **Home** — headshot, tagline, photo carousel
+          - [ ] **Purpose** — Statement of Purpose still reflects current goals; add any new testimonials
+          - [ ] **Timeline** — new roles, honors, or milestones added; Technical Strengths current
+          - [ ] **Publications** — new papers, accepted manuscripts, or updated links/DOIs
+          - [ ] **Experiences** — entries and descriptions still accurate
+          - [ ] **Presentations** — new talks or posters added
+          - [ ] **CV PDF** — `public/documents/` copy matches the latest CV
+          - [ ] **Contact and profile links** — email, LinkedIn, X, and other links all work
+
+          Close this issue when the review is done.
+          BODY
+
+          args=(--title "Content review: $quarter" --body-file body.md --label content-review)
+          if [ -n "$ASSIGNEE" ]; then args+=(--assignee "$ASSIGNEE"); fi
+
+          gh issue create "${args[@]}"
