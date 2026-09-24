@@ -6,7 +6,7 @@ startDate: "2015-07"
 endDate: "2015-08"
 type: "Research"
 highlights:
-  - "Developed a behavioral experiment in MATLAB to determine whether human subjects were inherently more confident about the self-assessment of their accuracy (metacognition) on visual versus auditory discrimination tasks."
+  - "Developed a behavioral experiment in MATLAB, under the guidance of Dr. Nathan Faivre, PhD, to determine whether human subjects were inherently more confident about the self-assessment of their accuracy (metacognition) on visual versus auditory discrimination tasks."
   - "Collected EEG, ECG, and behavioral data from local participants in Lausanne, analyzed in MATLAB and R to estimate metacognitive performance."
   - "Demonstrated a positive correlation between sensory modalities suggesting a common brain mechanism instead of divergent pathways controlling multisensory metacognition."
   - "Designed an Arduino-based electric system for testing tactile metacognition."
