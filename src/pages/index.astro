@@ -11,7 +11,8 @@ const quoteEntries = await getCollection('quote');
 const quoteEntry = quoteEntries[0];
 
 // Replaces the old "M2 — highlight stats" placeholder: real photos Vishrut
-// dropped in, in the order they actually happened. Not a content
+// dropped in. Display order is curated, not chronological — the Emory and
+// lab-bench photos sit at the end of the roll by request. Not a content
 // collection — this is a one-off Home page section, not a schema other
 // pages need (see the testimonials/quote collections for that pattern).
 // Alt text sticks to what's visibly true; a caption asserting a specific
@@ -21,22 +22,10 @@ const quoteEntry = quoteEntries[0];
 // have a confirmed venue/date, so their alt text stays purely descriptive).
 const LIFE_PHOTOS = [
   {
-    src: '/images/life/poster-emory-mdsee.jpg',
-    width: 480,
-    height: 640,
-    alt: "Shruti presenting a patient case poster during her MD Summer Experience at Emory, 2016",
-  },
-  {
     src: '/images/life/white-coat.jpg',
     width: 480,
     height: 640,
     alt: 'Shruti in her white coat, outside a university building',
-  },
-  {
-    src: '/images/life/lab-bench-selfie.jpg',
-    width: 853,
-    height: 640,
-    alt: 'Shruti in the lab beside a surgical microscope rig',
   },
   {
     src: '/images/life/lab-group.jpg',
@@ -61,6 +50,18 @@ const LIFE_PHOTOS = [
     width: 853,
     height: 640,
     alt: 'Shruti presenting her PhD dissertation defense, June 2025',
+  },
+  {
+    src: '/images/life/poster-emory-mdsee.jpg',
+    width: 480,
+    height: 640,
+    alt: "Shruti presenting a patient case poster during her MD Summer Experience at Emory, 2016",
+  },
+  {
+    src: '/images/life/lab-bench-selfie.jpg',
+    width: 853,
+    height: 640,
+    alt: 'Shruti in the lab beside a surgical microscope rig',
   },
 ];
 ---
@@ -125,13 +126,7 @@ const LIFE_PHOTOS = [
 
   {quoteEntry && (
     <blockquote class="mb-10 border-t border-rule pt-8">
-      <p class="font-devanagari text-2xl leading-relaxed text-ink" lang="sa">
-        {quoteEntry.data.devanagari}
-      </p>
-      {quoteEntry.data.transliteration && (
-        <p class="mt-2 max-w-prose text-sm italic text-muted">{quoteEntry.data.transliteration}</p>
-      )}
-      <p class="mt-3 max-w-prose font-serif text-lg italic text-ink">
+      <p class="max-w-prose font-serif text-lg italic text-ink">
         &ldquo;{quoteEntry.data.translation}&rdquo;
       </p>
       {quoteEntry.data.source && (
