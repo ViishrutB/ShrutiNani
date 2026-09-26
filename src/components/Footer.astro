@@ -21,7 +21,10 @@ const ICONS: Record<string, string> = {
 
 <footer class="mt-20 border-t border-rule">
   <div class="mx-auto flex max-w-3xl flex-col gap-4 px-6 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-    <p>© {year} {site.name}</p>
+    <div>
+      <p>© {year} {site.name}</p>
+      <p class="mt-1 text-xs">This site uses privacy-friendly analytics — no cookies, no personal data collected.</p>
+    </div>
     {
       links.length > 0 && (
         <ul class="flex flex-wrap items-center gap-2">
